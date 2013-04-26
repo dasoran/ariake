@@ -1,5 +1,5 @@
 class Entry < ActiveRecord::Base
-  attr_accessible :event_id, :circle_id, :attend_at, :goods_updated_at
+  attr_accessible :event_id, :circle_id, :attend_at, :place, :goods_updated_at
   belongs_to :event
   belongs_to :circle
   has_many :circle_goods_lists

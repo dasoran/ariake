@@ -4,6 +4,7 @@ class CreateEntries < ActiveRecord::Migration
       t.references :event, null: false
       t.references :circle, null: false
       t.integer :attend_at, null: false, default: 0
+      t.string :place, null: false
       t.datetime :goods_updated_at
       t.timestamps
     end
