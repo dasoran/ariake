@@ -4,4 +4,7 @@ Ariake::Application.routes.draw do
     collection {get "login"}
   end
   resource :session, only: [:create, :destroy]
+  resources :entries do
+    collection { get "search" }
+  end
 end
