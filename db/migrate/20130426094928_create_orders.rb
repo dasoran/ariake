@@ -4,12 +4,12 @@ class CreateOrders < ActiveRecord::Migration
       t.references :event, null: false
       t.references :circle, null: false
       t.references :user, null: false
-      t.references :goods, null: false
+      t.references :handout, null: false
       t.timestamps
     end
     add_index :orders, :event_id
     add_index :orders, :circle_id
     add_index :orders, :user_id
-    add_index :orders, :goods_id
+    add_index :orders, :handout_id
   end
 end
