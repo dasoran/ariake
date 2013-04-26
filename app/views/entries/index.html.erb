@@ -6,19 +6,24 @@
     <th>サークル名</th>
     <th>作家</th>
     <th>頒布物</th>
+    <th>希望数</th>
+　　<th>最終更新日時</th>
   </tr>
   <% @entries.each do |entry| %>
+　　<% is_first = true %>
+    <% entry.handouts.each do |handout| %>
   <tr>
-  <td align="right"><%= entry.attend_at %></td>
-    <td><%= entry.place %></td>
-    <td><%= entry.circle.name %></td>
-    <td><%= entry.circle.author %></td>
-    <td><% entry.handouts.each do |handout| %>
-        <%= handout.goods.name %>
-        <%= handout.goods.price %>
-        <% end %>
+  <td class="attend_day"><%= entry.attend_at %></td>
+    <td><%= is_first == true ? entry.place : ""  %></td>
+    <td><%= is_first == true ? entry.circle.name : ""  %></td>
+    <td><%= is_first == true ? entry.circle.author : ""  %></td>
+    <td>
+          <%= handout.goods.name %>
+          <%= handout.goods.price %>
     </td>
   </tr>
+    <% is_first = false %>
+    <% end %>
   <% end %>
 </table>
 <% else %>
