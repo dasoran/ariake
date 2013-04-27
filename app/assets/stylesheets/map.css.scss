@@ -1,0 +1,56 @@
+// Place all the styles related to the map controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+div.map_block {
+  position: relative;
+  float: left;
+  margin: 0;
+  width: 1270px;
+  height: 540px;
+
+  .map_image_block {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+  .map_marker_block {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    .marker {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      filter: alpha(opacity=0.5);
+      opacity: 0.5;
+      -moz-opacity: 0.5;
+      background-color: #f00;
+    }
+    .marker_2 {
+    }
+  }
+}
+
+div.info_block {
+  position: relative;
+  float: left;
+
+  div.info_element {
+    border: solid 1px #000;
+    width: 300px;
+    height: 60px;
+    float: left;
+  }
+}
+
+div.end_block {
+  clear: left;
+}
+
+
+
+
+

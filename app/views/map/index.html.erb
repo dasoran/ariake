@@ -1,0 +1,26 @@
+<div class="map_block">
+  <div class="map_image_block">
+    <%= image_tag "c83_maps/MAP#{@map_id}.PNG" %>
+  </div>
+  <div class="map_marker_block">
+  <% @entries.each do |entry| %>
+    <% block_layout = @comiket_layout[entry.place[1]] %>
+    <% layout = block_layout[entry.place[-3, 2].to_i] %>
+    <div class="marker marker_<%= layout["layout"] %>"
+      style="left: <%= layout["x"] %>px; top: <%= layout["y"] %>px">
+    </div>
+  <% end %>
+  </div>
+</div>
+<div class="info_block">
+  <% @entries.each do |entry| %>
+    <div class="info_element">
+      <%= entry.place %>, 
+      <%= entry.circle.name %>
+    </div>
+  <% end %>
+  <div class="end_element">
+  </div>
+</div>
+<div class="end_block">
+</div>

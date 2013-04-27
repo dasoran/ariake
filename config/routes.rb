@@ -7,4 +7,5 @@ Ariake::Application.routes.draw do
   resources :entries do
     collection { get "search" }
   end
+  resources :map
 end
