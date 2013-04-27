@@ -24,10 +24,9 @@ div.map_block {
       position: absolute;
       width: 10px;
       height: 10px;
-      filter: alpha(opacity=0.5);
-      opacity: 0.5;
-      -moz-opacity: 0.5;
-      background-color: #f00;
+      filter: alpha(opacity=0.6);
+      opacity: 0.6;
+      -moz-opacity: 0.6;
     }
     .marker_2 {
     }
@@ -37,13 +36,16 @@ div.map_block {
 div.info_block {
   position: relative;
   float: left;
+}
 
-  div.info_element {
-    border: solid 1px #000;
-    width: 300px;
-    height: 60px;
-    float: left;
-  }
+div.info_element {
+  border: solid 1px #000;
+  width: 300px;
+  height: 60px;
+  float: left;
+  filter: alpha(opacity=0.9);
+  opacity: 0.9;
+  -moz-opacity: 0.9;
 }
 
 div.end_block {
