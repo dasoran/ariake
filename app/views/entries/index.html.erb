@@ -23,7 +23,7 @@
           <%= handout.goods.price %>
     </td>
     <td></td>
-    <td><%= is_first == true ? entry.goods_updated_at : "" %></td>
+    <td><%= is_first == true ? entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S"):"" %></td>
     <td> 
       <%= link_to "編集", [:edit, entry] %> |
       <%= link_to "削除", entry, method: :delete,
