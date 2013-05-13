@@ -1,4 +1,8 @@
 <% if @entries.present? %>
+<%= form_tag :search_entries, method: :get do %>
+<p><%= text_field_tag "search_form", params[:search_form],:size => 25 %>
+<%= submit_tag "検索" %></p>
+<% end %>
 <p><%= link_to "新規登録", :new_entry %></p>
 <table class="list">
   <tr>
