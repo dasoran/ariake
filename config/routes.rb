@@ -8,4 +8,5 @@ Ariake::Application.routes.draw do
     collection { get "search" }
   end
   resources :map
+  resources :checklists
 end

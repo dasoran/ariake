@@ -1,4 +1,9 @@
 <% if @entries.present? %>
+<%= form_tag :search_entries, method: :get do %>
+<p><%= text_field_tag "search_form", params[:search_form],:size => 25 %>
+<%= submit_tag "検索" %></p>
+<% end %>
+<p><%= link_to "新規登録", :new_entry %></p>
 <table class="list">
   <tr>
     <th>参加日</th>
@@ -20,6 +25,13 @@
     <td>
           <%= handout.goods.name %>
           <%= handout.goods.price %>
+    </td>
+    <td></td>
+    <td><%= is_first == true ? entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S"):"" %></td>
+    <td> 
+      <%= link_to "編集", [:edit, entry] %> |
+      <%= link_to "削除", entry, method: :delete,
+            confirm: "本当に削除しますか？" %>
     </td>
   </tr>
     <% is_first = false %>
