@@ -146,6 +146,9 @@ aside {
   }
 
 }
+.content-fixed {
+  max-width: 960px;
+}
 
 
 /* --------------------------
@@ -292,6 +295,17 @@ aside {
 .thumb-frame {
   border: 1px solid #ddd;
   box-shadow: 3px 5px 8px 0 #888;
+  -webkit-box-shadow: 3px 5px 8px 0 #888;
+  -moz-box-shadow: 3px 5px 8px 0 #888;
+}
+
+.dashboard {
+  margin-left: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 3px 5px 8px 0 #888;
+  -webkit-box-shadow: 3px 5px 8px 0 #888;
+  -moz-box-shadow: 3px 5px 8px 0 #888;
 }
 
 

@@ -1,12 +1,12 @@
 # coding: utf-8
 
-class SessionController < ApplicationController
+class SessionsController < ApplicationController
   def create
-    user = User.authenticate(params[:name], params[:password])
+    user = User.authenticate(params[:login_id], params[:password])
     if user
       session[:user_id] = user.id
     else
-      flash.alert = "ログイン情報が間違っています"
+      flash[:error] = "ログイン情報が間違っています"
     end
     redirect_to :root
   end

@@ -9,5 +9,4 @@ Ariake::Application.routes.draw do
   end
   resources :maps
   resources :checklists
-  resources :users
 end

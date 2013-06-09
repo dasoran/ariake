@@ -12,4 +12,9 @@ class UsersController < ApplicationController
       render "new"
     end
   end
+  def login
+    if @current_user
+      redirect_to :root
+    end
+  end
 end

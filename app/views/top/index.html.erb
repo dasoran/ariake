@@ -3,10 +3,12 @@
 <h1 class="pure-u-1">Ariake</h1>
 </div>
 
-<div class="content">
+<div class="content content-fixed">
+<% unless @current_user %>
 <h2 class="content-subhead">新規登録</h2>
 <%= link_to "登録する", new_user_path, :class => "pure-button pure-button-primary" %>
 <p>新規登録は「登録する」ボタンをクリックしてください。</p>
+<% end %>
 <h2 class="content-subhead">使い方</h2>
 <div class="pure-g-r l-hbox">
 <div class="pure-u-1-2">
