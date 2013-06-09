@@ -1,2 +1,33 @@
-<h1>Top#index</h1>
-<p>Find me in app/views/top/index.html.erb</p>
+<% @page_title = "TOP" %>
+<div class="header pure-u-1">
+<h1 class="pure-u-1">Ariake</h1>
+</div>
+
+<div class="content">
+<h2 class="content-subhead">新規登録</h2>
+<%= link_to "登録する", new_user_path, :class => "pure-button pure-button-primary" %>
+<p>新規登録は「登録する」ボタンをクリックしてください。</p>
+<h2 class="content-subhead">使い方</h2>
+<div class="pure-g-r l-hbox">
+<div class="pure-u-1-2">
+<h3>Entries</h3>
+<div class="l-hbox">
+<div class="thumb-frame">
+<%= image_tag 'thumb_entries.png' %>
+</div>
+<p><strong>Entries</strong>は、イベント参加サークル・頒布物の一覧になります。</p>
+</div>
+</div>
+<div class="pure-u-1-2">
+<h3>Maps</h3>
+<div class="l-hbox">
+<div class="thumb-frame">
+<%= image_tag 'thumb_maps.png' %>
+</div>
+<p><strong>Maps</strong>は、購入希望者のいるサークルの地図になります。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+

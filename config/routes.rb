@@ -7,6 +7,7 @@ Ariake::Application.routes.draw do
   resources :entries do
     collection { get "search" }
   end
-  resources :map
+  resources :maps
   resources :checklists
+  resources :users
 end

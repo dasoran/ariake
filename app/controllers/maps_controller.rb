@@ -5,7 +5,7 @@
 # MAPの値固定の話は、画像から取得等を別途考える
 
 
-class MapController < ApplicationController
+class MapsController < ApplicationController
   # mock data (あとでカタROM の情報に置き換える)
   @@user_color = {"sora_sakaki" => "#55f",
     "xxyuiyaxx" => "#f55"}

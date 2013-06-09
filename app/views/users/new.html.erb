@@ -1,0 +1,19 @@
+<div class="header-none">
+</div>
+
+<div class="content">
+<%= form_for @user ,:html => {:class => "pure-form pure-form-stacked"} do |form|%>
+<fieldset>
+  <legend>アカウントの新規登録</legend>
+  <%= form.label :login_id, "loginID" %>
+  <%= form.text_field :login_id, placeholder: "loginID" %>
+  <%= form.label :name, "Username" %>
+  <%= form.text_field :name, placeholder: "Username" %>
+  <%= form.label :password, "Password" %>
+  <%= form.password_field :password, placeholder: "Password", id: "pass_form" %>
+  <button type="submit" class="pure-button pure-button-success" id="regist-button">登録する</button>
+</fieldset>
+<% end %>
+
+</div>
+
