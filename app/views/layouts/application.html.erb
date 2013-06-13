@@ -81,6 +81,9 @@
   var menu = document.getElementById('menu'),
     menuLink = document.getElementById('menuLink'),
     layout = document.getElementById('layout'),
+    dashboardSubContiner = document.getElementById('dashboard-sub-continer'),
+    dashboardMenuLink = document.getElementById('dashboardMenuLink'),
+    dashboardLayout = document.getElementById('dashboard-layout'),
 
     toggleClass = function (element, className) {
         var classes = element.className.split(/\s+/),
@@ -106,6 +109,13 @@
         var active = 'active';
         toggleClass(layout, active);
         toggleClass(menu, active);
+    };
+
+    dashboardMenuLink.onclick = function (e) {
+        e.preventDefault();
+        var active = 'active';
+        toggleClass(dashboardLayout, active);
+        toggleClass(dashboardSubContiner, active);
     };
 
   </script>
