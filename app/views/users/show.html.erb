@@ -1,41 +1,45 @@
 <div class="pure-g-r clearfix" id="dashboard-layout">
 
-<a href="#menu" id="dashboardMenuLink" class="dashboard-menu-link">
-<%= image_tag 'navicon-png2x.png', :width => '20' %>
-</a>
+  <a href="#menu" id="dashboardMenuLink" class="dashboard-menu-link">
+  <%= image_tag 'navicon-png2x.png', :width => '20' %>
+  </a>
 
-<div class="dashboard" id="dashboard-main-continer">
-<div class="dashboard-main">
+  <div class="dashboard" id="dashboard-main-continer">
+  <div class="dashboard-main">
 
-<div class="main-item clearfix">
-<div class="icon">
-hello
-</div>
-<div class="text-continer">
-<div class="text">
-hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello
-</div>
-</div>
-</div>
+    <div class="main-item clearfix">
+      <div class="icon">
+      hello
+      </div>
+      <div class="text-continer">
+      <div class="text">
+      hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello
+      </div>
+      </div>
+    </div>
 
-</div>
-</div>
+  </div>
+  </div>
 
-<div class="dashboard" id="dashboard-sub-continer">
-<div class="dashboard-sub">
+  <div class="dashboard" id="dashboard-sub-continer">
+  <div class="dashboard-sub">
 
-<div class="sub-item">
-<%= link_to "Logout", :session, method: :delete %>
-</div>
+    <div class="sub-item">
+    <%= link_to "Logout", :session, method: :delete %>
+    </div>
 
-<div class="sub-item">
-<p>
-aa
-</p>
-</div>
+    <div class="sub-item">
+    <%= link_to "登録しているサークル", entries_user_path(@current_user.login_id) %>
+    </div>
 
-</div>
-</div>
+    <div class="sub-item">
+    <p>
+    aa
+    </p>
+    </div>
+
+  </div>
+  </div>
 
 </div>
 

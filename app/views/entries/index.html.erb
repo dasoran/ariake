@@ -5,40 +5,114 @@
 <%= submit_tag "検索" %></p>
 <% end %>
 <p><%= link_to "新規登録", :new_entry %></p>
-<table class="list">
+
+
+
+<table class="pure-table entries-table">
+  <thead>
   <tr>
-    <th>参加日</th>
+    <th>日</th>
     <th>配置</th>
     <th>サークル名</th>
     <th>作家</th>
-    <th>頒布物</th>
     <th>希望数</th>
+    <th>頒布物</th>
+    <th>価格</th>
 　　<th>最終更新日時</th>
   </tr>
+  </thead>
+
+  <tbody>
+    <script type="text/javascript">
+      var entryUrlList = {};
+    </script>
   <% @entries.each do |entry| %>
+    <script type="text/javascript">
+      entryUrlList[<%= entry.id %>] = '<%= entry.circle.circle_urls.count != 0 ? entry.circle.circle_urls[0].page_url: "#" %>';
+    </script>
 　　<% is_first = true %>
     <% entry.handouts.each do |handout| %>
-  <tr>
-  <td class="attend_day"><%= entry.attend_at %></td>
-    <td><%= is_first == true ? entry.place : ""  %></td>
-    <td><%= is_first == true ? entry.circle.name : ""  %></td>
-    <td><%= is_first == true ? entry.circle.author : ""  %></td>
+      <% hcount = entry.handouts.count %>
+  <tr class="entry-row entry-<%= entry.id %>">
+    <% if is_first == true %>
+      <td rowspan="<%= hcount %>"><%= entry.attend_at %></td>
+      <td rowspan="<%= hcount %>"><%= entry.place %></td>
+      <td rowspan="<%= hcount %>" class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
+      <td rowspan="<%= hcount %>"><%= entry.circle.author %></td>
+    <% end %>
+    <td></td>
     <td>
           <%= handout.goods.name %>
+    </td>
+    <td>
           <%= handout.goods.price %>
     </td>
-    <td></td>
     <td><%= is_first == true ? entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S"):"" %></td>
-    <td> 
-      <%= link_to "編集", [:edit, entry] %> |
-      <%= link_to "削除", entry, method: :delete,
-            confirm: "本当に削除しますか？" %>
-    </td>
   </tr>
-    <% is_first = false %>
+      <% is_first = false %>
     <% end %>
   <% end %>
+  </tbody>
 </table>
+
+
+<script type="text/javascript">
+  (function () {
+    var entriesList = {};
+    $(".entry-row").each(function () {
+      var entryId = $(this).attr('class').split(' ')[1].split('-')[1];
+      if (entriesList[entryId] == undefined) {
+        entriesList[entryId] = [];
+      }
+      entriesList[entryId].push(this);
+    });
+    
+    for (var key in entriesList) {
+      (function (key) {
+        var entries = entriesList[key];
+
+        $(".entry-"+key+"-name").hover(
+          function () {
+            $(".entry-"+key+"-name").addClass("entries-name-selected");
+          },
+          function () {
+            $(".entry-"+key+"-name").removeClass("entries-name-selected");
+          }
+        );
+
+        $(".entry-"+key+"-name").click(function () {
+          window.location = entryUrlList[key];
+          return false;
+        });
+
+
+        for (var entryKey in entries) {
+          (function (entryKey) {
+            var entry = entries[entryKey];
+            $(entry).hover(
+              function () {
+                for (var eKeyTmp in entries) {
+                  $(entries[eKeyTmp]).addClass("entries-selected");
+                }
+              },
+              function () {
+                for (var eKeyTmp in entries) {
+                  $(entries[eKeyTmp]).removeClass("entries-selected");
+                }
+              }
+            );
+            $(entry).click(function () {
+              window.location = "/entries/"+key;
+            });
+          })(entryKey)
+        }
+      })(key)
+    }
+  })();
+</script>
+
+
 <% else %>
 <p>サークル情報がありません</p>
 <% end %>
+

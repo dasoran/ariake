@@ -111,12 +111,14 @@
         toggleClass(menu, active);
     };
 
-    dashboardMenuLink.onclick = function (e) {
-        e.preventDefault();
-        var active = 'active';
-        toggleClass(dashboardLayout, active);
-        toggleClass(dashboardSubContiner, active);
-    };
+    if (dashboardMenuLink != undefined) {
+      dashboardMenuLink.onclick = function (e) {
+          e.preventDefault();
+          var active = 'active';
+          toggleClass(dashboardLayout, active);
+          toggleClass(dashboardSubContiner, active);
+      };
+    }
 
   </script>
 

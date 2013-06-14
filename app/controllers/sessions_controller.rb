@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     else
       flash[:error] = "ログイン情報が間違っています"
     end
-    redirect_to :root
+    redirect_to user_path(user.login_id)
   end
 
   def destroy

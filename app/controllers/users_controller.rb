@@ -17,4 +17,6 @@ class UsersController < ApplicationController
       redirect_to :root
     end
   end
+  def entries
+  end
 end

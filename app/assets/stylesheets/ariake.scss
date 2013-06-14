@@ -467,3 +467,24 @@ aside {
   display: block;
 }
 
+.entries-table {
+  font-size: 0.8em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  tbody tr td {
+    vertical-align: top;
+  }
+}
+
+
+.entries-selected {
+  background-color: #fdd;
+}
+
+
+td.entries-name-selected {
+  background-color: #ddf;
+}
+
+
