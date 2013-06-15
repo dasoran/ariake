@@ -28,6 +28,9 @@ class EntriesController < ApplicationController
   end
 
   def destroy
+    entry = Entry.find_by_id(params[:id])
+    entry.destroy
+    redirect_to entries_path, success: "削除しました。"
   end
 
 end
