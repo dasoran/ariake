@@ -1,10 +1,11 @@
 <% @page_title = "Entries" %>
 <% if @entries.present? %>
+<div class="entries-content">
 <%= form_tag :search_entries, method: :get do %>
 <p><%= text_field_tag "search_form", params[:search_form],:size => 25 %>
 <%= submit_tag "検索" %></p>
 <% end %>
-<p><%= link_to "新規登録", :new_entry %></p>
+<%= link_to "サークルを追加する", :new_entry, :class => "pure-button pure-button-error entry-new-button" %>
 
 
 
@@ -40,14 +41,22 @@
       <td rowspan="<%= hcount %>" class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
       <td rowspan="<%= hcount %>"><%= entry.circle.author %></td>
     <% end %>
-    <td></td>
-    <td>
+    <td class="<%= is_first ? "" : "extend" %>">
+      <% order_quantity = 0 %>
+      <% handout.orders.each do |order| %>
+        <% order_quantity = order_quantity + order.quantity %>
+      <% end %>
+      <%= order_quantity %>
+    </td>
+    <td class="<%= is_first ? "" : "extend" %>">
           <%= handout.goods.name %>
     </td>
-    <td>
+    <td class="<%= is_first ? "" : "extend" %>">
           <%= handout.goods.price %>
     </td>
-    <td><%= is_first == true ? entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S"):"" %></td>
+    <% if is_first == true %>
+      <td rowspan="<%= hcount %>"><%= entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S")%></td>
+    <% end %>
   </tr>
       <% is_first = false %>
     <% end %>
@@ -113,6 +122,8 @@
 
 
 <% else %>
-<p>サークル情報がありません</p>
+<div class="content">
+  <p>サークル情報がありません</p>
 <% end %>
+</div>
 

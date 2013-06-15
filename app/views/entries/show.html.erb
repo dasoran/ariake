@@ -1,0 +1,89 @@
+<% @page_title = "[%s %d日目 %s] %s" % [@entry.event.name, @entry.attend_at, @entry.place, @entry.circle.name] %>
+<div class="header-none">
+</div>
+
+<div class="content">
+<% if @entry.present? %>
+  <%= link_to "編集する", edit_entry_path, :class => "pure-button pure-button-secondary entry-edit-button" %>
+  <table class="pure-table entry-show-table">
+    <tbody>
+      <tr>
+        <th>参加イベント</th>
+        <td colspan="4"><%= @entry.event.name %></td>
+      </tr>
+
+      <tr>
+        <th>参加位置</th>
+        <td colspan="4"><%= "%d日目 %s" % [@entry.attend_at, @entry.place] %></td>
+      </tr>
+
+      <tr>
+        <th>サークル名</th>
+        <td colspan="4"><%= @entry.circle.name %></td>
+      </tr>
+
+      <tr>
+        <th>作家</th>
+        <td colspan="4"><%= @entry.circle.author %></td>
+      </tr>
+
+      <% is_first = true %>
+      <% @entry.circle.circle_urls.each do |url| %>
+      <tr>
+        <% if is_first %>
+        <th rowspan="<%= @entry.circle.circle_urls.count %>">URL</th>
+        <td class="circle-url-master" colspan="4"><a href="<%= url.page_url %>"><%= url.page_url %></a> (master)</td>
+        <% is_first = false %>
+        <% else %>
+        <td colspan="4"><a href="<%= url.page_url %>"><%= url.page_url %></a></td>
+        <% end %>
+      </tr>
+      <% end %>
+
+      <% ocount = 0 %>
+      <% @entry.handouts.each do |handout| %>
+      <%   ocount = ocount + handout.orders.count %>
+      <% end %>
+      <% is_first = true %>
+      <% @entry.handouts.each do |handout| %>
+      <% is_first_sub = true %>
+      <% handout.orders.each do |order| %>
+      <tr>
+        <% if is_first %>
+        <th rowspan="<%= ocount %>">頒布物</th>
+        <% is_first = false %>
+        <% end %>
+        <% if is_first_sub %>
+        <td class="handout-name" rowspan="<%= handout.orders.count %>"><%= handout.goods.name %></td>
+        <td class="handout-price" rowspan="<%= handout.orders.count %>"><%= handout.goods.price %></td>
+        <% is_first_sub = false %>
+        <% end %>
+        <td class="order-name"><%= order.user.name %></td>
+        <td class="order-count"><%= order.quantity %></td>
+      </tr>
+      <% end %>
+      <% end %>
+
+      <tr>
+        <th>更新日時</th>
+        <td colspan="4"><%= @entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S") %></td>
+      </tr>
+
+      <tr>
+        <th>作成日時</th>
+        <td colspan="4"><%= @entry.created_at.strftime("%y-%m-%d %H:%M:%S") %></td>
+      </tr>
+
+      <tr>
+        <th>更新履歴</th>
+        <td colspan="4"></td>
+      </tr>
+
+
+    </tbody>
+  </table>
+<% else %>
+  <p>サークル情報がありません</p>
+<% end %>
+</div>
+

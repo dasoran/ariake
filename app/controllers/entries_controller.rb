@@ -12,6 +12,7 @@ class EntriesController < ApplicationController
   end 
   
   def show
+    @entry = Entry.find_by_id(params[:id])
   end
 
   def new

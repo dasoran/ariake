@@ -467,13 +467,22 @@ aside {
   display: block;
 }
 
-.entries-table {
-  font-size: 0.8em;
+
+.entries-content {
+  width: 95%;
   margin-left: auto;
   margin-right: auto;
-  width: 95%;
+}
+
+.entries-table {
+  font-size: 0.8em;
+  width: 100%;
   tbody tr td {
     vertical-align: top;
+    border-top: 1px solid #ddd;
+  }
+  tbody tr td.extend {
+    border-top: 0px solid #ddd;
   }
 }
 
@@ -486,5 +495,49 @@ aside {
 td.entries-name-selected {
   background-color: #ddf;
 }
+
+
+.entry-show-table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: 960px;
+  tbody tr {
+    vertical-align: top;
+    th {
+      text-align: left;
+      background-color: #e0e0e0;
+      color: #000;
+      width: 150px;
+      border-top: 1px solid #ddd;
+      white-space: nowrap;
+    }
+    td {
+      border-top: 1px solid #ddd;
+    }
+    td.circle-url-master {
+      background-color: #ddf;
+    }
+    td.handout-name {
+    }
+    td.handout-price {
+      width: 100px;
+    }
+    td.order-name {
+      width: 100px;
+      white-space: nowrap;
+    }
+    td.order-count {
+      width: 10px;
+      white-space: nowrap;
+    }
+  }
+}
+
+.entry-new-button,
+.entry-edit-button {
+  margin-bottom: 10px;
+}
+
 
 
