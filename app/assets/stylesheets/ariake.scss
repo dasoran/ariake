@@ -539,10 +539,17 @@ td.entries-name-selected {
     td.order-name {
       width: 100px;
       white-space: nowrap;
+      a{
+        padding: .3em 1.0em;
+      }
     }
     td.order-count {
-      width: 10px;
+      vertical-align: middle;
+      width: 50px;
       white-space: nowrap;
+      input {
+        width: 40px;
+      }
     }
   }
 }

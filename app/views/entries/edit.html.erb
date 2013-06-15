@@ -4,13 +4,6 @@
 
 <div class="entries-content">
 <% if @entry.present? %>
-  <%= link_to "編集する", edit_entry_path, :class => "pure-button pure-button-secondary entry-edit-button" %>
-  <%= link_to "削除する", entry_path, method: :delete, :class => "pure-button pure-button-error entry-edit-button", confirm: "削除しますか？" %>
-
-
-  <%= form_tag update_all_orders_path, :class => "pure-form" do%>
-  <input type="hidden" name="entry_id" value="<%= @entry.id %>">
-
   <table class="pure-table entry-show-table">
     <tbody>
       <tr>
@@ -49,49 +42,14 @@
       <% ocount = 0 %>
       <% @entry.handouts.each do |handout| %>
       <%   ocount = ocount + handout.orders.count %>
-      <%   is_exist_me = false %>
-      <%   handout.orders.each do |order| %>
-      <%     is_exist_me = true if order.user.id == @current_user.id %>
-      <%   end %>
-      <%   ocount = ocount + 1 unless is_exist_me %>
       <% end %>
       <% is_first = true %>
       <% @entry.handouts.each do |handout| %>
-      <%   is_exist_me = false %>
-      <%   handout.orders.each do |order| %>
-      <%     is_exist_me = true if order.user.id == @current_user.id %>
-      <%   end %>
-      <%   is_first_sub = true %>
-
-      <%   unless is_exist_me %>
+      <% is_first_sub = true %>
+      <% handout.orders.each do |order| %>
       <tr>
         <% if is_first %>
-        <th rowspan="<%= ocount %>">
-        頒布物
-        <button type="submit" class="pure-button pure-button-secondary">更新</button>
-        </th>
-        <% is_first = false %>
-        <% end %>
-        <% if is_first_sub %>
-        <td class="handout-name" rowspan="<%= handout.orders.count + 1 %>"><%= handout.goods.name %></td>
-        <td class="handout-price" rowspan="<%= handout.orders.count + 1 %>"><%= handout.goods.price %></td>
-        <% is_first_sub = false %>
-        <% end %>
-        <td class="order-name">
-          <%= link_to "希望する", create_from_link_orders_path(:handout_id => handout.id, :entry_id => @entry.id), :class => "pure-button pure-button-primary" %>
-        </td>
-        <td class="order-count">
-        </td>
-      </tr>
-      <%   end %>
- 
-      <%   handout.orders.each do |order| %>
-     <tr>
-        <% if is_first %>
-        <th rowspan="<%= ocount %>">
-        頒布物
-        <button type="submit" class="pure-button pure-button-secondary">更新</button>
-        </th>
+        <th rowspan="<%= ocount %>">頒布物</th>
         <% is_first = false %>
         <% end %>
         <% if is_first_sub %>
@@ -99,16 +57,8 @@
         <td class="handout-price" rowspan="<%= handout.orders.count %>"><%= handout.goods.price %></td>
         <% is_first_sub = false %>
         <% end %>
-        <td class="order-name">
-        <%= order.user.name %>
-        </td>
-        <td class="order-count">
-          <% if order.user.id == @current_user.id %>
-          <input name="quantity-<%= order.id %>" type="text" value="<%= order.quantity %>" class="pure-u"/>
-          <% else %>
-          <%= order.quantity %>
-          <% end %>
-        </td>
+        <td class="order-name"><%= order.user.name %></td>
+        <td class="order-count"><%= order.quantity %></td>
       </tr>
       <% end %>
       <% end %>
@@ -131,9 +81,6 @@
 
     </tbody>
   </table>
-
-  <% end %>
-
 <% else %>
   <p>サークル情報がありません</p>
 <% end %>

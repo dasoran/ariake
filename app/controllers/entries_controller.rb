@@ -13,12 +13,14 @@ class EntriesController < ApplicationController
   
   def show
     @entry = Entry.find_by_id(params[:id])
+#    flash[:info] = "注意：頒布物の新規での希望はどのボタンを押しても 0 以外になっているものすべてが追加されます。"
   end
 
   def new
   end
 
   def edit
+    @entry = Entry.find_by_id(params[:id])
   end
 
   def create
