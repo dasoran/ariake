@@ -2,9 +2,10 @@
 <div class="header-none">
 </div>
 
-<div class="content">
+<div class="entries-content">
 <% if @entry.present? %>
   <%= link_to "編集する", edit_entry_path, :class => "pure-button pure-button-secondary entry-edit-button" %>
+  <%= link_to "削除する", entry_path, method: :delete, :class => "pure-button pure-button-error entry-edit-button" %>
   <table class="pure-table entry-show-table">
     <tbody>
       <tr>

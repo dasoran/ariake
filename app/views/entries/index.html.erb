@@ -5,7 +5,7 @@
 <p><%= text_field_tag "search_form", params[:search_form],:size => 25 %>
 <%= submit_tag "検索" %></p>
 <% end %>
-<%= link_to "サークルを追加する", :new_entry, :class => "pure-button pure-button-error entry-new-button" %>
+<%= link_to "サークルを追加する", :new_entry, :class => "pure-button pure-button-primary entry-new-button" %>
 
 
 
@@ -13,7 +13,7 @@
   <thead>
   <tr>
     <th>日</th>
-    <th>配置</th>
+    <th class="place">配置</th>
     <th>サークル名</th>
     <th>作家</th>
     <th>希望数</th>
@@ -36,12 +36,12 @@
       <% hcount = entry.handouts.count %>
   <tr class="entry-row entry-<%= entry.id %>">
     <% if is_first == true %>
-      <td rowspan="<%= hcount %>"><%= entry.attend_at %></td>
-      <td rowspan="<%= hcount %>"><%= entry.place %></td>
+      <td class="attend-at" rowspan="<%= hcount %>"><%= entry.attend_at %></td>
+      <td class="place" rowspan="<%= hcount %>"><%= entry.place %></td>
       <td rowspan="<%= hcount %>" class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
       <td rowspan="<%= hcount %>"><%= entry.circle.author %></td>
     <% end %>
-    <td class="<%= is_first ? "" : "extend" %>">
+    <td class="quantity <%= is_first ? "" : "extend" %>">
       <% order_quantity = 0 %>
       <% handout.orders.each do |order| %>
         <% order_quantity = order_quantity + order.quantity %>
@@ -51,11 +51,11 @@
     <td class="<%= is_first ? "" : "extend" %>">
           <%= handout.goods.name %>
     </td>
-    <td class="<%= is_first ? "" : "extend" %>">
+    <td class="price <%= is_first ? "" : "extend" %>">
           <%= handout.goods.price %>
     </td>
     <% if is_first == true %>
-      <td rowspan="<%= hcount %>"><%= entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S")%></td>
+      <td class="updated-at" rowspan="<%= hcount %>"><%= entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S")%></td>
     <% end %>
   </tr>
       <% is_first = false %>
