@@ -30,6 +30,17 @@ class EntriesController < ApplicationController
     @map_layout = @entry.map_layout
     @block = @map_layout.comiket_block
     @map_e_w_j = @block.comiket_area.name[0]
+
+
+    @all_blocks = {"east" => Array::new, "west" => Array::new}
+    ComiketBlock.all.each do |block|
+      if block.comiket_area.name[0] == "東"
+        @all_blocks["east"] << block
+      else
+        @all_blocks["west"] << block
+      end
+    end
+
   end
 
   def create
@@ -48,69 +59,88 @@ class EntriesController < ApplicationController
     entry = Entry.find_by_id(params[:id])
     is_change = false
 
-    unless params[:event].to_i == entry.event_id
-      entry.event_id = params[:event].to_i
-      is_change = true
-      entry.save
-    end
+    # map_layout,comiket-block,comiket-area check
+    map_layout = MapLayout.joins(:comiket_block).where("map_layouts.space_number = %d and comiket_blocks.name = '%s'" % [params[:space_number], params[:block_name]]).first
 
-    unless params[:day].to_i == entry.attend_at
-      entry.attend_at = params[:day].to_i
-      is_change = true
-      entry.save
-    end
+    if map_layout.nil?
+      flash[:info] = "参加位置が間違えています。"
+      redirect_to edit_entry_path(params[:id])
+    else 
+    # map_layout,comiket-block,comiket-area check
 
-    # circle
-    unless params[:circlename] == entry.circle.name
-      entry.circle.name = params[:circlename]
-      is_change = true
-      entry.circle.save
-    end
+      unless params[:event].to_i == entry.event_id
+        entry.event_id = params[:event].to_i
+        is_change = true
+        entry.save
+      end
 
-    unless params[:author] == entry.circle.author
-      entry.circle.author = params[:author]
-      is_change = true
-      entry.circle.save
-    end
+      unless params[:day].to_i == entry.attend_at
+        entry.attend_at = params[:day].to_i
+        is_change = true
+        entry.save
+      end
 
-    master_url_id = params[:masterRadios].to_i
-    master_url = CircleUrl.find_by_id(master_url_id)
-    present_master_url = CircleUrl.where(circle_id: entry.circle.id, is_master_url: true).first
-    if present_master_url.nil?
-      master_url.is_master_url = true
-      is_change = true
-      master_url.save
-    else
-      unless master_url_id == present_master_url.id
-        present_master_url.is_master_url = false
+      unless map_layout == entry.map_layout
+        entry.map_layout_id = map_layout.id
+        is_change = true
+        entry.save
+      end
+
+      unless params[:sub_place] == entry.sub_place
+        entry.sub_place = params[:sub_place]
+        is_change = true
+        entry.save
+      end
+
+
+      # circle
+      unless params[:circlename] == entry.circle.name
+        entry.circle.name = params[:circlename]
+        is_change = true
+        entry.circle.save
+      end
+
+      unless params[:author] == entry.circle.author
+        entry.circle.author = params[:author]
+        is_change = true
+        entry.circle.save
+      end
+
+      master_url_id = params[:masterRadios].to_i
+      master_url = CircleUrl.find_by_id(master_url_id)
+      present_master_url = CircleUrl.where(circle_id: entry.circle.id, is_master_url: true).first
+      if present_master_url.nil?
         master_url.is_master_url = true
         is_change = true
-        present_master_url.save
         master_url.save
+      else
+        unless master_url_id == present_master_url.id
+          present_master_url.is_master_url = false
+          master_url.is_master_url = true
+          is_change = true
+          present_master_url.save
+          master_url.save
+        end
       end
+
+      params.each do |key, value|
+        next unless key.split("-")[0] == "url"
+        url_id = key.split("-")[1].to_i
+        url = CircleUrl.find_by_id(url_id)
+        next if url.page_url == value
+
+        url.page_url = value
+        is_change = true
+        url.save
+      end
+      #circle
+
+      if is_change then
+        flash[:success] = "サークルのイベント登録情報を変更しました。"
+      else 
+        flash[:info] = "変更がありません。"
+      end
+      redirect_to entry_path(params[:id])
     end
-
-    params.each do |key, value|
-      next unless key.split("-")[0] == "url"
-      url_id = key.split("-")[1].to_i
-      url = CircleUrl.find_by_id(url_id)
-      next if url.page_url == value
-
-      url.page_url = value
-      is_change = true
-      url.save
-    end
-
-    #circle
-
-    #params.each do |key, param|
-    #  is_change = true
-    #end
-    if is_change then
-      flash[:success] = "サークルのイベント登録情報を変更しました。"
-    else 
-      flash[:info] = "変更がありません。"
-    end
-    redirect_to entry_path(params[:id])
   end
 end

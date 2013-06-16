@@ -38,6 +38,15 @@
           <select id="block-name" name="block_name">
           </select>
 
+          -
+
+          <input class="sub-place-input" name="space_number" value="<%= @map_layout.space_number %>" />
+
+          <select id="sub-place" name="sub_place">
+            <option value="a" <%= "selected" if "a" == @entry.sub_place%>>a</option>
+            <option value="b" <%= "selected" if "b" == @entry.sub_place%>>b</option>
+          </select>
+
         </td>
       </tr>
 
@@ -116,7 +125,37 @@
   <% end %>
 
   <script type="text/javascript">
-    //var eastBlockNames = [
+    var blockNames = {e: [
+        <% @all_blocks["east"].each do |block| %>
+          "<%= block.name %>", 
+        <% end %>
+        ], w: [
+        <% @all_blocks["west"].each do |block| %>
+          "<%= block.name %>", 
+        <% end %>
+        ]};
+
+    $('#map-e-w').change(function () {
+      var selectedEW = $('#map-e-w option:selected').val();
+      $('#block-name option').remove();
+      for (var i=0; i<blockNames[selectedEW].length; i++) {
+        (function (i) {
+          $('#block-name').append($('<option>'+blockNames[selectedEW][i]+'</option>'));
+        })(i)
+      }
+    });
+
+    var selectedEW = $('#map-e-w option:selected').val();
+    for (var i=0; i<blockNames[selectedEW].length; i++) {
+      (function (i) {
+        if (blockNames[selectedEW][i] == "<%= @block.name %>") {
+          $('#block-name').append($('<option selected>'+blockNames[selectedEW][i]+'</option>'));
+        } else {
+          $('#block-name').append($('<option>'+blockNames[selectedEW][i]+'</option>'));
+        }
+      })(i)
+    }
+    
 
   </script>
 
