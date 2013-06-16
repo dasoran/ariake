@@ -1,28 +1,35 @@
 # coding: utf-8
 class EntriesController < ApplicationController
   def index
-    event = Event.find_by_name("C84") 
-    @entries = Entry.find_all_by_event_id(event.id)
-    def search
-      event = Event.find_by_name("C84")
-      @entries = Entry.find_all_by_event_id(event.id)
-      @entries = Entry.includes(:circle).where('circles.name LIKE ? OR circles.author LIKE ? OR entries.place LIKE ?','%'+params[:search_form]+'%','%'+params[:search_form]+'%','%'+params[:search_form]+'%')
-      render "index"
-    end
+    @event = Event.find_by_name("C84") 
+    @entries = Entry.find_all_by_event_id(@event.id)
+    #def search
+    #  event = Event.find_by_name("C84")
+    #  @entries = Entry.find_all_by_event_id(event.id)
+    #  @entries = Entry.includes(:circle).where('circles.name LIKE ? OR circles.author LIKE ? OR entries.place LIKE ?','%'+params[:search_form]+'%','%'+params[:search_form]+'%','%'+params[:search_form]+'%')
+    #  render "index"
+    #end
   end 
   
   def show
     @entry = Entry.find_by_id(params[:id])
-#    flash[:info] = "注意：頒布物の新規での希望はどのボタンを押しても 0 以外になっているものすべてが追加されます。"
+    @map_layout = @entry.map_layout
+    @block = @map_layout.comiket_block
+    @map_e_w_j = @block.comiket_area.name[0]
   end
 
   def new
+    @event = Event.find_by_id(params[:event_id])
   end
 
   def edit
     @entry = Entry.find_by_id(params[:id])
     @events = Event.all
     @days = (@entry.event.end_at - @entry.event.begin_at + 1)/60/60/24
+
+    @map_layout = @entry.map_layout
+    @block = @map_layout.comiket_block
+    @map_e_w_j = @block.comiket_area.name[0]
   end
 
   def create

@@ -5,7 +5,7 @@
 <p><%= text_field_tag "search_form", params[:search_form],:size => 25 %>
 <%= submit_tag "検索" %></p>
 <% end %>
-<%= link_to "サークルをイベントに追加する", :new_entry, :class => "pure-button pure-button-primary entry-new-button" %>
+<%= link_to "サークルをイベントに追加する", new_entry_path(:event_id => @event.id), :class => "pure-button pure-button-primary entry-new-button" %>
 
 
 
@@ -41,7 +41,10 @@
   <tr class="entry-row entry-<%= entry.id %>">
     <% if is_first == true %>
       <td class="attend-at" rowspan="<%= hcount %>"><%= entry.attend_at %></td>
-      <td class="place" rowspan="<%= hcount %>"><%= entry.place %></td>
+      <td class="place" rowspan="<%= hcount %>">
+        <% block = entry.map_layout.comiket_block %>
+        <%= block.comiket_area.name[0] %><%= block.name %>-<%= entry.map_layout.space_number %><%= entry.sub_place %>
+      </td>
       <td rowspan="<%= hcount %>" class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
       <td rowspan="<%= hcount %>"><%= entry.circle.author %></td>
     <% end %>

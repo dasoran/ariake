@@ -1,4 +1,4 @@
-<% @page_title = "登録情報編集 [%s %d日目 %s] %s" % [@entry.event.name, @entry.attend_at, @entry.place, @entry.circle.name] %>
+<% @page_title = "登録情報編集 [%s %d日目 %s%s-%s%s] %s" % [@entry.event.name, @entry.attend_at, @map_e_w_j, @block.name, @map_layout.space_number, @entry.sub_place, @entry.circle.name] %>
 <div class="header-none">
 </div>
 
@@ -30,7 +30,14 @@
             <% end %>
           </select>
 
-          <%= @entry.place %>
+          <select id="map-e-w" name="map_e_w">
+            <option value="e" <%= "selected" if "e" == @block.comiket_area.map_e_w%>>東</option>
+            <option value="w" <%= "selected" if "w" == @block.comiket_area.map_e_w%>>西</option>
+          </select>
+
+          <select id="block-name" name="block_name">
+          </select>
+
         </td>
       </tr>
 
@@ -107,6 +114,11 @@
   <button type="submit" class="pure-button pure-button-secondary" id="update-entry-button">更新する</button>
 
   <% end %>
+
+  <script type="text/javascript">
+    //var eastBlockNames = [
+
+  </script>
 
 <% else %>
   <p>サークル情報がありません</p>

@@ -47,6 +47,12 @@
       ">
         <%= link_to "Maps", maps_path %>
       </li>
+
+      <li class="
+      <%= request.path_info == "/circles"? "pure-menu-selected" : ""%>
+      ">
+        <%= link_to "Circles", circles_path %>
+      </li>
     
     </ul>
   </div>

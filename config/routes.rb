@@ -16,4 +16,5 @@ Ariake::Application.routes.draw do
     collection {post "update_all"}
   end
   resources :circle_urls, only: [:create, :destroy]
+  resources :circles
 end
