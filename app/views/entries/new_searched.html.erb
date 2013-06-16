@@ -1,0 +1,35 @@
+<% @page_title = "登録情報追加 [%s]" % [@event.name] %>
+<div class="entries-content">
+
+  <h2 class="content-subhead">イベントにサークルを追加する</h2>
+  
+  <table class="pure-table entry-show-table">
+    <thead>
+      <tr>
+        <th>サークル名</th>
+        <th>作家</th>
+        <th>登録済</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @circles.each do |circle| %>
+      <% is_registered_yet = Entry.where(:event_id => @event.id, :circle_id => circle.id).first.nil? %>
+      <tr>
+        <td><%= circle.name %></td>
+        <td><%= circle.author %></td>
+        <td>
+          <% unless is_registered_yet %>
+            済
+          <% else %>
+            <%= link_to "追加", new_detail_entries_path(:event_id => @event.id, :circle_id => circle.id), method: :get, :class => "pure-button pure-button-primary url-destroy-button", confirm: "%s を追加しますか？" % circle.name %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table> 
+  <h2 class="content-subhead">新しいサークルを追加する</h2>
+  <p>新しいサークルを追加するには、下の「追加する」をクリックしてください。</p>
+  <%= link_to "追加する", new_circle_path, :class => "pure-button pure-button-primary" %>
+</div>
+

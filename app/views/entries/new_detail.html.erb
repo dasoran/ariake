@@ -1,0 +1,108 @@
+<% @page_title = "登録情報追加 [%s]" % [@event.name] %>
+<div class="header-none">
+</div>
+
+<div class="entries-content">
+
+  <%= form_tag entries_path, :method => "post", :class => "pure-form" do%>
+  <table class="pure-table entry-show-table">
+    <tbody>
+      <tr>
+        <th>参加イベント</th>
+        <td colspan="3">
+          <select id="event" name="event">
+            <% @events.each do |event| %>
+            <option value="<%= event.id %>" <%= "selected" if event.id == @event.id%>><%= event.name %></option>
+            <% end %>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <th>参加位置</th>
+        <td colspan="3">
+
+          <select id="day" name="day">
+            <% is_first = true %>
+            <% (1..@days).each do |day| %>
+            <option value="<%= day %>" <%= "selected" if is_first %>><%= day %>日目</option>
+            <% is_first = false %>
+            <% end %>
+          </select>
+
+          <select id="map-e-w" name="map_e_w">
+            <option value="e" "selected">東</option>
+            <option value="w">西</option>
+          </select>
+
+          <select id="block-name" name="block_name">
+          </select>
+
+          -
+
+          <input class="sub-place-input" name="space_number" value="" />
+
+          <select id="sub-place" name="sub_place">
+            <option value="a" "selected">a</option>
+            <option value="b">b</option>
+          </select>
+
+        </td>
+      </tr>
+
+      <input name="circle" value="<%= @circle.id %>" type="hidden">
+      <tr>
+        <th>サークル名</th>
+        <td><%= @circle.name %></td>
+      </tr>
+
+      <tr>
+        <th>作家</th>
+        <td><%= @circle.author %></td>
+      </tr>
+
+
+
+
+    </tbody>
+  </table>
+
+  <button type="submit" class="pure-button pure-button-secondary" id="update-entry-button">追加する</button>
+
+  <% end %>
+
+  <script type="text/javascript">
+    var blockNames = {e: [
+        <% @all_blocks["east"].each do |block| %>
+          "<%= block.name %>", 
+        <% end %>
+        ], w: [
+        <% @all_blocks["west"].each do |block| %>
+          "<%= block.name %>", 
+        <% end %>
+        ]};
+
+    $('#map-e-w').change(function () {
+      var selectedEW = $('#map-e-w option:selected').val();
+      $('#block-name option').remove();
+      for (var i=0; i<blockNames[selectedEW].length; i++) {
+        (function (i) {
+          $('#block-name').append($('<option>'+blockNames[selectedEW][i]+'</option>'));
+        })(i)
+      }
+    });
+
+    var selectedEW = $('#map-e-w option:selected').val();
+    for (var i=0; i<blockNames[selectedEW].length; i++) {
+      (function (i) {
+        $('#block-name').append($('<option>'+blockNames[selectedEW][i]+'</option>'));
+      })(i)
+    }
+    
+
+  </script>
+
+
+
+</div>
+

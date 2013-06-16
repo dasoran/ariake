@@ -1,10 +1,14 @@
 <% @page_title = "Entries" %>
 <% if @entries.present? %>
+<div class="header-none">
+</div>
 <div class="entries-content">
+<!--
 <%= form_tag :search_entries, method: :get do %>
 <p><%= text_field_tag "search_form", params[:search_form],:size => 25 %>
 <%= submit_tag "検索" %></p>
 <% end %>
+-->
 <%= link_to "サークルをイベントに追加する", new_entry_path(:event_id => @event.id), :class => "pure-button pure-button-primary entry-new-button" %>
 
 
@@ -36,10 +40,25 @@
       entryUrlList[<%= entry.id %>] = '<%= page_url == "" ? "#" :page_url %>';
     </script>
 　　<% is_first = true %>
+    <% if entry.handouts.count == 0 %>
+    <tr class="entry-row entry-<%= entry.id %>">
+      <td class="attend-at"><%= entry.attend_at %></td>
+      <td class="place">
+        <% block = entry.map_layout.comiket_block %>
+        <%= block.comiket_area.name[0] %><%= block.name %>-<%= entry.map_layout.space_number %><%= entry.sub_place %>
+      </td>
+      <td class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
+      <td><%= entry.circle.author %></td>
+      <td class="quantity"></td>
+      <td></td>
+      <td class="price"></td>
+      <td class="updated-at"><%= entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S")%></td>
+    </tr>
+    <% else %>
     <% entry.handouts.each do |handout| %>
-      <% hcount = entry.handouts.count %>
-  <tr class="entry-row entry-<%= entry.id %>">
-    <% if is_first == true %>
+    <% hcount = entry.handouts.count %>
+    <tr class="entry-row entry-<%= entry.id %>">
+      <% if is_first == true %>
       <td class="attend-at" rowspan="<%= hcount %>"><%= entry.attend_at %></td>
       <td class="place" rowspan="<%= hcount %>">
         <% block = entry.map_layout.comiket_block %>
@@ -48,26 +67,27 @@
       <td rowspan="<%= hcount %>" class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
       <td rowspan="<%= hcount %>"><%= entry.circle.author %></td>
     <% end %>
-    <td class="quantity <%= is_first ? "" : "extend" %>">
-      <% order_quantity = 0 %>
-      <% handout.orders.each do |order| %>
+      <td class="quantity <%= is_first ? "" : "extend" %>">
+        <% order_quantity = 0 %>
+        <% handout.orders.each do |order| %>
         <% order_quantity = order_quantity + order.quantity %>
-      <% end %>
-      <%= order_quantity %>
-    </td>
-    <td class="<%= is_first ? "" : "extend" %>">
-          <%= handout.goods.name %>
-    </td>
-    <td class="price <%= is_first ? "" : "extend" %>">
-          <%= handout.goods.price %>
-    </td>
-    <% if is_first == true %>
+        <% end %>
+        <%= order_quantity %>
+      </td>
+      <td class="<%= is_first ? "" : "extend" %>">
+        <%= handout.goods.name %>
+      </td>
+      <td class="price <%= is_first ? "" : "extend" %>">
+        <%= handout.goods.price %>
+      </td>
+      <% if is_first == true %>
       <td class="updated-at" rowspan="<%= hcount %>"><%= entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S")%></td>
+      <% end %>
+    </tr>
+    <% is_first = false %>
     <% end %>
-  </tr>
-      <% is_first = false %>
     <% end %>
-  <% end %>
+    <% end %>
   </tbody>
 </table>
 

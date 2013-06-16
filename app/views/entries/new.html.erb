@@ -1,7 +1,16 @@
 <% @page_title = "登録情報追加 [%s]" % [@event.name] %>
-<div class="header-none">
-</div>
-
 <div class="entries-content">
+
+  <h2 class="content-subhead">イベントにサークルを追加する</h2>
+  <%= form_tag new_searched_entries_path, method: :get, :class => "pure-form pure-form-stacked" do %>
+    <fieldset>
+      <legend>サークル検索</legend>
+      <label for="search_text">サークル名/作家名</label>
+      <input name="search_text" class="pure-input-2-3" type="text" placeholder="">
+      <button type="submit" class="pure-button pure-button-success" id="search-button-in-newentry">検索</button>
+      <input name="event_id" type="hidden" value="<%= @event.id %>">
+    </fieldset>
+  <% end %>
+
 </div>
 
