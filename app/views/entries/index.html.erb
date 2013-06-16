@@ -5,7 +5,7 @@
 <p><%= text_field_tag "search_form", params[:search_form],:size => 25 %>
 <%= submit_tag "検索" %></p>
 <% end %>
-<%= link_to "サークルを追加する", :new_entry, :class => "pure-button pure-button-primary entry-new-button" %>
+<%= link_to "サークルをイベントに追加する", :new_entry, :class => "pure-button pure-button-primary entry-new-button" %>
 
 
 
@@ -29,7 +29,11 @@
     </script>
   <% @entries.each do |entry| %>
     <script type="text/javascript">
-      entryUrlList[<%= entry.id %>] = '<%= entry.circle.circle_urls.count != 0 ? entry.circle.circle_urls[0].page_url: "#" %>';
+      <% page_url = "" %>
+      <% entry.circle.circle_urls.each do |url|%>
+      <%   page_url = url.page_url if url.is_master_url %>
+      <% end %>
+      entryUrlList[<%= entry.id %>] = '<%= page_url == "" ? "#" :page_url %>';
     </script>
 　　<% is_first = true %>
     <% entry.handouts.each do |handout| %>
@@ -79,20 +83,23 @@
     for (var key in entriesList) {
       (function (key) {
         var entries = entriesList[key];
+        
+        if (entryUrlList[key] != "#") {
 
-        $(".entry-"+key+"-name").hover(
-          function () {
-            $(".entry-"+key+"-name").addClass("entries-name-selected");
-          },
-          function () {
-            $(".entry-"+key+"-name").removeClass("entries-name-selected");
-          }
-        );
+          $(".entry-"+key+"-name").hover(
+            function () {
+              $(".entry-"+key+"-name").addClass("entries-name-selected");
+            },
+            function () {
+              $(".entry-"+key+"-name").removeClass("entries-name-selected");
+            }
+          );
 
-        $(".entry-"+key+"-name").click(function () {
-          window.location = entryUrlList[key];
-          return false;
-        });
+          $(".entry-"+key+"-name").click(function () {
+            window.location = entryUrlList[key];
+            return false;
+          });
+        }
 
 
         for (var entryKey in entries) {

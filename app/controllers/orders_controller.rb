@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   def update_all
     is_change = false
     params.each do |key, param|
-      next if key.split("-")[0] != "quantity"
+      next unless key.split("-")[0] == "quantity"
       quantity = param.to_i
       order_id = key.split("-")[1].to_i
       order = Order.find_by_id(order_id)

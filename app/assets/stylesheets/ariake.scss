@@ -452,6 +452,7 @@ aside {
 }
 
 
+#update-entry-button,
 #regist-button {
   margin-top: 10px;
 }
@@ -551,6 +552,14 @@ td.entries-name-selected {
         width: 40px;
       }
     }
+    td.circle-url-checkbox {
+      width: 150px;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+    td.circle-url-textform {
+      vertical-align: middle;
+    }
   }
 }
 
@@ -558,6 +567,12 @@ td.entries-name-selected {
 .entry-edit-button {
   margin-bottom: 10px;
 }
+
+.url-destroy-button {
+  padding: .25em .75em;
+  margin-left: -5px;
+}
+
 
 
 

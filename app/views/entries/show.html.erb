@@ -5,10 +5,9 @@
 <div class="entries-content">
 <% if @entry.present? %>
   <%= link_to "編集する", edit_entry_path, :class => "pure-button pure-button-secondary entry-edit-button" %>
-  <%= link_to "削除する", entry_path, method: :delete, :class => "pure-button pure-button-error entry-edit-button", confirm: "削除しますか？" %>
+  <%= link_to "削除する", entry_path, method: :delete, :class => "pure-button pure-button-error entry-edit-button", confirm: "イベント登録情報を削除しますか？" %>
 
-
-  <%= form_tag update_all_orders_path, :class => "pure-form" do%>
+<%= form_tag update_all_orders_path, :class => "pure-form" do%>
   <input type="hidden" name="entry_id" value="<%= @entry.id %>">
 
   <table class="pure-table entry-show-table">
@@ -38,8 +37,10 @@
       <tr>
         <% if is_first %>
         <th rowspan="<%= @entry.circle.circle_urls.count %>">URL</th>
-        <td class="circle-url-master" colspan="4"><a href="<%= url.page_url %>"><%= url.page_url %></a> (master)</td>
         <% is_first = false %>
+        <% end %>
+        <% if url.is_master_url %>
+        <td class="circle-url-master" colspan="4"><a href="<%= url.page_url %>"><%= url.page_url %></a> (master)</td>
         <% else %>
         <td colspan="4"><a href="<%= url.page_url %>"><%= url.page_url %></a></td>
         <% end %>
@@ -67,8 +68,8 @@
       <tr>
         <% if is_first %>
         <th rowspan="<%= ocount %>">
-        頒布物
-        <button type="submit" class="pure-button pure-button-secondary">更新</button>
+          頒布物<br>
+          <button type="submit" class="pure-button pure-button-secondary">希望更新</button>
         </th>
         <% is_first = false %>
         <% end %>
@@ -89,8 +90,8 @@
      <tr>
         <% if is_first %>
         <th rowspan="<%= ocount %>">
-        頒布物
-        <button type="submit" class="pure-button pure-button-secondary">更新</button>
+          頒布物<br>
+          <button type="submit" class="pure-button pure-button-secondary">希望更新</button>
         </th>
         <% is_first = false %>
         <% end %>

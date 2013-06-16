@@ -1,86 +1,113 @@
-<% @page_title = "[%s %d日目 %s] %s" % [@entry.event.name, @entry.attend_at, @entry.place, @entry.circle.name] %>
+<% @page_title = "登録情報編集 [%s %d日目 %s] %s" % [@entry.event.name, @entry.attend_at, @entry.place, @entry.circle.name] %>
 <div class="header-none">
 </div>
 
 <div class="entries-content">
 <% if @entry.present? %>
+  <strong>注意</strong>：サークル名、作家名、URLに関しては、他のイベントでの情報も変更されます。
+
+  <%= form_tag update_all_entry_path(@entry.id), :class => "pure-form" do%>
   <table class="pure-table entry-show-table">
     <tbody>
       <tr>
         <th>参加イベント</th>
-        <td colspan="4"><%= @entry.event.name %></td>
+        <td colspan="3">
+          <select id="event" name="event">
+            <% @events.each do |event| %>
+            <option value="<%= event.id %>" <%= "selected" if event.id == @entry.event.id%>><%= event.name %></option>
+            <% end %>
+          </select>
+        </td>
       </tr>
 
       <tr>
         <th>参加位置</th>
-        <td colspan="4"><%= "%d日目 %s" % [@entry.attend_at, @entry.place] %></td>
+        <td colspan="3">
+
+          <select id="day" name="day">
+            <% (1..@days).each do |day| %>
+            <option value="<%= day %>" <%= "selected" if day == @entry.attend_at%>><%= day %>日目</option>
+            <% end %>
+          </select>
+
+          <%= @entry.place %>
+        </td>
       </tr>
 
       <tr>
         <th>サークル名</th>
-        <td colspan="4"><%= @entry.circle.name %></td>
+        <td colspan="3">
+          <input class="pure-input-1" name="circlename" type="text" value="<%= @entry.circle.name %>"/>
+        </td>
       </tr>
 
       <tr>
         <th>作家</th>
-        <td colspan="4"><%= @entry.circle.author %></td>
+        <td colspan="3">
+          <input class="pure-input-1" name="author" type="text" value="<%= @entry.circle.author %>"/>
+        </td>
       </tr>
 
-      <% is_first = true %>
+
+      <tr>
+        <th rowspan="<%= @entry.circle.circle_urls.count + 1 %>">URL</th>
+
+        <td class="circle-url-checkbox">
+          <%= link_to "追加", circle_urls_path(:entry_id => @entry.id), method: :post, :class => "pure-button pure-button-primary url-destroy-button", confirm: "サークルのURLを追加しますか？" %>
+        </td>
+        <td class="circle-url-textform">
+        </td>
+      </tr> 
+
       <% @entry.circle.circle_urls.each do |url| %>
       <tr>
-        <% if is_first %>
-        <th rowspan="<%= @entry.circle.circle_urls.count %>">URL</th>
-        <td class="circle-url-master" colspan="4"><a href="<%= url.page_url %>"><%= url.page_url %></a> (master)</td>
-        <% is_first = false %>
+        <% if url.is_master_url %>
+        <td class="circle-url-master circle-url-checkbox">
+          <%= link_to "削除", circle_url_path(:id => url.id, :entry_id => @entry.id), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "サークルのURLを削除しますか？" %>
+          <input type="radio" name="masterRadios" value="<%= url.id%>" checked>
+          (master)
+        </td>
+        <td class="circle-url-master circle-url-textform" colspan="2">
+          <input class="pure-input-1" name="url-<%= url.id %>" type="text" value="<%= url.page_url %>"/>
+        </td>
         <% else %>
-        <td colspan="4"><a href="<%= url.page_url %>"><%= url.page_url %></a></td>
+        <td class="circle-url-checkbox">
+          <%= link_to "削除", circle_url_path(:id => url.id, :entry_id => @entry.id), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "サークルのURLを削除しますか？" %>
+          <input type="radio" name="masterRadios" value="<%= url.id%>">
+        </td>
+        <td class="circle-url-textform" colspan="2">
+          <input class="pure-input-1" name="url-<%= url.id %>" type="text" value="<%= url.page_url %>"/>
+        
+        </td>
         <% end %>
       </tr>
       <% end %>
 
-      <% ocount = 0 %>
-      <% @entry.handouts.each do |handout| %>
-      <%   ocount = ocount + handout.orders.count %>
-      <% end %>
+      <% ocount = @entry.handouts.count %>
       <% is_first = true %>
       <% @entry.handouts.each do |handout| %>
-      <% is_first_sub = true %>
-      <% handout.orders.each do |order| %>
       <tr>
         <% if is_first %>
-        <th rowspan="<%= ocount %>">頒布物</th>
+        <th rowspan="<%= ocount %>">
+          頒布物
+        </th>
         <% is_first = false %>
         <% end %>
-        <% if is_first_sub %>
-        <td class="handout-name" rowspan="<%= handout.orders.count %>"><%= handout.goods.name %></td>
-        <td class="handout-price" rowspan="<%= handout.orders.count %>"><%= handout.goods.price %></td>
-        <% is_first_sub = false %>
-        <% end %>
-        <td class="order-name"><%= order.user.name %></td>
-        <td class="order-count"><%= order.quantity %></td>
+        <td class="handout-name" colspan="2"><%= handout.goods.name %></td>
+        <td class="handout-price">
+          <input name="price-<%= handout.id %>" type="text" value="<%= handout.goods.price %>"/>
+          
+        </td>
       </tr>
       <% end %>
-      <% end %>
-
-      <tr>
-        <th>更新日時</th>
-        <td colspan="4"><%= @entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S") %></td>
-      </tr>
-
-      <tr>
-        <th>作成日時</th>
-        <td colspan="4"><%= @entry.created_at.strftime("%y-%m-%d %H:%M:%S") %></td>
-      </tr>
-
-      <tr>
-        <th>更新履歴</th>
-        <td colspan="4"></td>
-      </tr>
-
 
     </tbody>
   </table>
+
+  <button type="submit" class="pure-button pure-button-secondary" id="update-entry-button">更新する</button>
+
+  <% end %>
+
 <% else %>
   <p>サークル情報がありません</p>
 <% end %>

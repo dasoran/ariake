@@ -7,6 +7,7 @@ Ariake::Application.routes.draw do
   resource :session, only: [:create, :destroy]
   resources :entries do
     collection { get "search" }
+    member { post "update_all" }
   end
   resources :maps
   resources :checklists
@@ -14,4 +15,5 @@ Ariake::Application.routes.draw do
     collection {get "create_from_link"}
     collection {post "update_all"}
   end
+  resources :circle_urls, only: [:create, :destroy]
 end
