@@ -10,22 +10,25 @@
 <div class="header-entries clearfix pure-menu pure-menu-open pure-menu-horizontal entries-index-menu">
   <ul>
     <li class= <%= @day == "1" ? "pure-menu-selected" : "" %> >
-      <%= link_to "1日目", entries_path(:day => "1") %>
+      <%= link_to "1日目", entries_user_path(:id => @current_user.login_id, :day => "1") %>
     </li>
     <li class= <%= @day == "2" ? "pure-menu-selected" : "" %> >
-      <%= link_to "2日目", entries_path(:day => "2") %>
+      <%= link_to "2日目", entries_user_path(:id => @current_user.login_id, :day => "2") %>
     </li>
     <li class= <%= @day == "3" ? "pure-menu-selected" : "" %> >
-      <%= link_to "3日目", entries_path(:day => "3") %>
+      <%= link_to "3日目", entries_user_path(:id => @current_user.login_id, :day => "3") %>
     </li>
     <li class= <%= @day.nil? ? "pure-menu-selected" : "" %> >
-      <%= link_to "全日程", entries_path %>
+      <%= link_to "全日程", entries_user_path(:id => @current_user.login_id) %>
     </li>
   </ul>
 <%= link_to "サークルをイベントに追加する", new_entry_path(:event_id => @event.id), :class => "pure-button pure-button-primary entry-new-button" %>
 </div>
 
+
+
 <%= render "shared/entries_list" %>
 
 </div>
+
 

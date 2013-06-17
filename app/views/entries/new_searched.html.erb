@@ -28,8 +28,8 @@
       <% end %>
     </tbody>
   </table> 
-  <h2 class="content-subhead">新しいサークルを追加する</h2>
-  <p>新しいサークルを追加するには、下の「追加する」をクリックしてください。</p>
-  <%= link_to "追加する", new_circle_path, :class => "pure-button pure-button-primary" %>
+  <h2 class="content-subhead">サークルを新しく追加する</h2>
+  <p>サークルを新しく追加するには、下の「追加する」をクリックしてください。</p>
+  <%= link_to "追加する", new_circle_path(:from => "entries_new_searched", :event_id => @event.id), :class => "pure-button pure-button-primary" %>
 </div>
 

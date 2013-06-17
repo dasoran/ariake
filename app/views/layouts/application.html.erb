@@ -24,17 +24,35 @@
     <a class="pure-menu-heading" href="/">Ariake</a>
 
     <ul>
+
+
       <li class="
       <% if @current_user %>
+
       <%= request.path_info == "/users/"+@current_user.login_id ? "pure-menu-selected" : ""%>
       menu-item-divided">
+<!--
         <%= link_to @current_user.name, user_path(@current_user.login_id) %>
+-->
+<!-- user.show の代わり -->
+      <li class="">
+    <%= link_to "Logout", :session, method: :delete %>
+      </li>
+      <li class="
+      <%= request.path_info == "/users/%s/entries" % @current_user.login_id ? "pure-menu-selected" : ""%>
+      ">
+    <%= link_to "希望一覧", entries_user_path(@current_user.login_id) %>
+      </li>
+<!-- user.show の代わり -->
       <% else %>
+      <li class="
       <%= request.path_info == "/users/login"? "pure-menu-selected" : ""%>
       menu-item-divided">
         <%= link_to "Login", login_users_path %>
       <% end %>
       </li>
+
+
       
       <li class="
       <%= request.path_info == "/entries"? "pure-menu-selected" : ""%>
@@ -48,11 +66,13 @@
         <%= link_to "Maps", maps_path %>
       </li>
 
+<!--
       <li class="
       <%= request.path_info == "/circles"? "pure-menu-selected" : ""%>
       ">
         <%= link_to "Circles", circles_path %>
       </li>
+      -->
     
     </ul>
   </div>

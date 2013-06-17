@@ -1,0 +1,36 @@
+<% @page_title = "サークルを新しく追加する" %>
+
+
+<div class="entries-content">
+
+  <h2 class="content-subhead">サークルを新しく追加する</h2>
+
+  <%= form_tag circles_path, :method => "post", :class => "pure-form" do%>
+  <input name="from" type="hidden" value="<%= @from %>">
+  <% if @from == "entries_new_searched" %>
+  <input name="event_id" type="hidden" value="<%= @event_id %>">
+  <% end %>
+  <table class="pure-table entry-show-table">
+    <tbody>
+      <tr>
+        <th>サークル名</th>
+        <td colspan="3">
+          <input class="pure-input-1" name="circlename" type="text" value="" />
+        </td>
+      </tr>
+
+      <tr>
+        <th>作家</th>
+        <td colspan="3">
+          <input class="pure-input-1" name="author" type="text" value=""/>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="submit" class="pure-button pure-button-success" id="update-entry-button">追加する</button>
+
+  <% end %>
+
+</div>
+

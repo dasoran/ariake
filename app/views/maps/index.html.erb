@@ -1,4 +1,5 @@
 <% @page_title = "Maps" %>
+<div class="clearfix">
 <div class="map_block">
   <div class="map_image_block">
     <%= image_tag "c83_maps/MAP#{@map_id}.PNG" %>
@@ -7,11 +8,12 @@
   <% @entries.each do |entry_and_exe_users| %>
     <% entry = entry_and_exe_users["entry"] %>
     <% exe_users = entry_and_exe_users["exe_users"] %>
-    <% block_layout = @comiket_layout[entry.place[1]] %>
-    <% layout = block_layout[entry.place[-3, 2].to_i] %>
+    <% layout = entry.map_layout %>
+    <% unless exe_users.count == 0 %>
     <div class="marker marker_<%= layout["layout"] %>"
-      style="left: <%= layout["x"] %>px; top: <%= layout["y"] %>px; background-color: <%= @user_color[exe_users[0].login_id] %>">
+      style="left: <%= layout.x %>px; top: <%= layout.y %>px; background-color: <%= @user_color[exe_users[0].login_id] %>">
     </div>
+    <% end %>
   <% end %>
   </div>
 </div>
@@ -19,19 +21,23 @@
   <% @entries.each do |entry_and_exe_users| %>
     <% entry = entry_and_exe_users["entry"] %>
     <% exe_users = entry_and_exe_users["exe_users"] %>
+    <% map_layout = entry.map_layout %>
+    <% block = map_layout.comiket_block %>
+    <% unless exe_users.count == 0 %>
     <div class="info_element"
       style="background-color: <%= @user_color[exe_users[0].login_id] %>">
-      <%= entry.place %>, 
+      <%= "%s%s-%s%s" % [block.comiket_area.name[0], block.name, map_layout.space_number, entry.sub_place] %>, 
       <%= entry.circle.name %>
     </div>
+    <% end %>
   <% end %>
   <!--
   <div class="end_element">
   </div>
 </div>
 -->
-<div class="end_block">
 </div>
+
 
 <!--
 <%= link_to "checklistをダウンロードする", checklists_path %>

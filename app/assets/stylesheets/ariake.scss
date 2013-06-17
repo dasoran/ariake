@@ -581,6 +581,31 @@ td.entries-name-selected {
   margin-bottom: 10px;
 }
 
+.entries-index-menu ul {
+  float: left;
+}
+
+.entry-new-button {
+  float: right;
+}
+
+.header-entries {
+  margin-top: 30px;
+  border: 0px solid #fff;
+}
+
+.entries-index-menu li a {
+  padding: 5px 10px;
+}
+
+.entries-index-menu li.pure-menu-selected a {
+  color: #e55;
+  background-color: #ddd;
+}
+.entries-index-menu li.pure-menu-selected a:hover {
+  background-color: #ddd;
+}
+
 .url-destroy-button {
   padding: .25em .75em;
   margin-left: -5px;

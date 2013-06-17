@@ -2,7 +2,21 @@
 class EntriesController < ApplicationController
   def index
     @event = Event.find_by_name("C84") 
-    @entries = Entry.find_all_by_event_id(@event.id)
+
+    @day = params[:day]
+    @sort = params[:sort]
+    @sort_vec = params[:vec]
+
+    sortList = {"placeup" => "comiket_blocks.name, map_layouts.space_number, sub_place"}
+
+#    if @sort.nil?
+      @entries = Entry.
+        where("event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day])
+#    else
+#      @entries = Entry.includes(:map_layout => :comiket_block).
+#        where("event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
+#        order("%s" % sortList[@sort+@sort_vec])
+#    end
     #def search
     #  event = Event.find_by_name("C84")
     #  @entries = Entry.find_all_by_event_id(event.id)
@@ -66,7 +80,12 @@ class EntriesController < ApplicationController
     entry.save
 
     flash[:success] = "%s を %s に追加しました。" % [entry.circle.name, Event.find_by_id(params[:event]).name]
-    redirect_to entry_path(entry.id)
+
+    if params[:send_button] == "create"
+      redirect_to entries_path
+    else
+      redirect_to edit_entry_path(entry.id)
+    end
   end
 
   def edit
