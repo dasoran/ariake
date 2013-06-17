@@ -99,17 +99,23 @@
       </tr>
       <% end %>
 
-      <% ocount = @entry.handouts.count %>
-      <% is_first = true %>
-      <% @entry.handouts.each do |handout| %>
+      <% ocount = @entry.handouts.count + 1 %>
       <tr>
-        <% if is_first %>
         <th rowspan="<%= ocount %>">
           頒布物
         </th>
-        <% is_first = false %>
-        <% end %>
-        <td class="handout-name" colspan="2"><%= handout.goods.name %></td>
+        <td>
+          <%= link_to "追加", new_handout_path(:entry_id => @entry.id), :class => "pure-button pure-button-primary url-destroy-button" %>
+        </td>
+        <td class="handout-name"></td>
+        <td class="handout-price"></td>
+      </tr>
+      <% @entry.handouts.each do |handout| %>
+      <tr>
+        <td>
+          <%= link_to "削除", handout_path(:id => handout.id, :entry_id => @entry.id), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "頒布物を削除しますか？" %>
+        </td>
+        <td class="handout-name"><%= handout.goods.name %></td>
         <td class="handout-price">
           <input name="price-<%= handout.id %>" type="text" value="<%= handout.goods.price %>"/>
           

@@ -66,7 +66,7 @@ class EntriesController < ApplicationController
     entry.save
 
     flash[:success] = "%s を %s に追加しました。" % [entry.circle.name, Event.find_by_id(params[:event]).name]
-    redirect_to entries_path
+    redirect_to entry_path(entry.id)
   end
 
   def edit

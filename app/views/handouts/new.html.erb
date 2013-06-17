@@ -1,0 +1,45 @@
+<% @page_title = "頒布物追加" %>
+<div class="header-none">
+</div>
+
+<div class="entries-content">
+  <% if @entry.present? %>
+  <%= form_tag handouts_path, :method => "post", :class => "pure-form pure-form-stacked" do%>
+    <fieldset>
+      <legend>よくある頒布物</legend>
+      <input type="hidden" name="entry_id" value="<%= @entry.id %>">
+      <input type="hidden" name="in_generic" value="true">
+    
+      <% @goods.each do |goods| %>
+      <% next unless goods.is_generic %>
+        <label class="pure-radio">
+          <input type="radio" name="goods_id" value="<%= goods.id %>">
+          <%= goods.name %> <%=goods.price %>
+        </label>
+      <% end %>
+      <button type="submit" class="pure-button pure-button-success" id="update-entry-button">よくある頒布物から追加する</button>
+    </fieldset>
+  <% end %>
+
+  <%= form_tag handouts_path, :method => "post", :class => "pure-form pure-form-stacked" do%>
+    <fieldset>
+      <legend>その他</legend>
+      <input type="hidden" name="entry_id" value="<%= @entry.id %>">
+      <input type="hidden" name="in_generic" value="false">
+    
+      <label for="name">頒布物名</label>
+      <input id="name" name="name" type="text" class="pure-input-2-3">
+
+      <label for="price">価格</label>
+      <input id="price" name="price" type="text" class="pure-input-1-4">
+
+      <button type="submit" class="pure-button pure-button-success" id="update-entry-button">その他から追加する</button>
+    </fieldset>
+  <% end %>
+
+
+  <% else %>
+  <p>サークル情報がありません</p>
+  <% end %>
+</div>
+

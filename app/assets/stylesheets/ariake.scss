@@ -541,7 +541,10 @@ td.entries-name-selected {
     td.handout-name {
     }
     td.handout-price {
-      width: 100px;
+      width: 80px;
+      input {
+        width: 80px;
+      }
     }
     td.order-name {
       width: 100px;
