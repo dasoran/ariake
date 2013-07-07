@@ -1,4 +1,4 @@
-<% @page_title = "[%s %d日目 %s%s-%s%s] %s" % [@entry.event.name, @entry.attend_at, @map_e_w_j, @block.name, @map_layout.space_number, @entry.sub_place, @entry.circle.name] %>
+<% @page_title = "[%s %d日目 %s%s-%s%s] %s" % [@event.name, @entry.attend_at, @map_e_w_j, @block.name, @map_layout.space_number, @entry.sub_place, @entry.circle.name] %>
 <div class="header-none">
 </div>
 
@@ -14,7 +14,7 @@
     <tbody>
       <tr>
         <th>参加イベント</th>
-        <td colspan="4"><%= @entry.event.name %></td>
+        <td colspan="4"><%= @event.name %></td>
       </tr>
 
       <tr>

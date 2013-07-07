@@ -11,7 +11,7 @@ Ariake::Application.routes.draw do
   end
   resources :maps
   resources :checklists
-  resources :orders, do
+  resources :orders do
     collection {get "create_from_link"}
     collection {post "update_all"}
   end

@@ -7,27 +7,25 @@ class EntriesController < ApplicationController
     @sort = params[:sort]
     @sort_vec = params[:vec]
 
-    sortList = {"placeup" => "comiket_blocks.name, map_layouts.space_number, sub_place"}
+    sortList = {
+      "placeup" => "comiket_blocks.name, map_layouts.space_number, sub_place",
+      "placedown" => "comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc"
+      }
 
-#    if @sort.nil?
-      @entries = Entry.
-        where("event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day])
-#    else
-#      @entries = Entry.includes(:map_layout => :comiket_block).
-#        where("event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
-#        order("%s" % sortList[@sort+@sort_vec])
-#    end
-    #def search
-    #  event = Event.find_by_name("C84")
-    #  @entries = Entry.find_all_by_event_id(event.id)
-    #  @entries = Entry.includes(:circle).where('circles.name LIKE ? OR circles.author LIKE ? OR entries.place LIKE ?','%'+params[:search_form]+'%','%'+params[:search_form]+'%','%'+params[:search_form]+'%')
-    #  render "index"
-    #end
+    if @sort.nil?
+      @entries = Entry.includes(:map_layout).
+        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day])
+    else
+      @entries = Entry.includes(:map_layout => :comiket_block).
+        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
+        order("%s" % sortList[@sort+@sort_vec])
+    end
   end 
   
   def show
     @entry = Entry.find_by_id(params[:id])
     @map_layout = @entry.map_layout
+    @event = @map_layout.event
     @block = @map_layout.comiket_block
     @map_e_w_j = @block.comiket_area.name[0]
   end
@@ -72,7 +70,6 @@ class EntriesController < ApplicationController
     # map_layout,comiket-block,comiket-area check
 
     entry = Entry.new
-    entry.event_id = params[:event].to_i
     entry.circle_id = params[:circle].to_i
     entry.attend_at = params[:day].to_i
     entry.map_layout_id = map_layout.id
@@ -91,7 +88,8 @@ class EntriesController < ApplicationController
   def edit
     @entry = Entry.find_by_id(params[:id])
     @events = Event.all
-    @days = (@entry.event.end_at - @entry.event.begin_at + 1)/60/60/24
+    @event = @entry.map_layout.event
+    @days = (@event.end_at - @event.begin_at + 1)/60/60/24
 
     @map_layout = @entry.map_layout
     @block = @map_layout.comiket_block
@@ -129,19 +127,14 @@ class EntriesController < ApplicationController
     is_change = false
 
     # map_layout,comiket-block,comiket-area check
-    map_layout = MapLayout.joins(:comiket_block).where("map_layouts.space_number = %d and comiket_blocks.name = '%s'" % [params[:space_number], params[:block_name]]).first
+    map_layout = MapLayout.includes(:comiket_block).
+      where("space_number = %d and comiket_blocks.name = '%s' and event_id = %d" % [params[:space_number], params[:block_name], params[:event]]).first
 
     if map_layout.nil?
       flash[:info] = "参加位置が間違えています。"
       return redirect_to edit_entry_path(params[:id])
     end
     # map_layout,comiket-block,comiket-area check
-
-    unless params[:event].to_i == entry.event_id
-      entry.event_id = params[:event].to_i
-      is_change = true
-      entry.save
-    end
 
     unless params[:day].to_i == entry.attend_at
       entry.attend_at = params[:day].to_i

@@ -45,7 +45,7 @@
         <%= block.comiket_area.name[0] %><%= block.name %>-<%= entry.map_layout.space_number %><%= entry.sub_place %>
       </td>
       <td class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
-      <td><%= entry.circle.author %></td>
+      <td class="entry-circle-author"><%= entry.circle.author %></td>
       <td class="quantity"></td>
       <td></td>
       <td class="price"></td>
@@ -62,7 +62,7 @@
         <%= block.comiket_area.name[0] %><%= block.name %>-<%= entry.map_layout.space_number %><%= entry.sub_place %>
       </td>
       <td rowspan="<%= hcount %>" class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
-      <td rowspan="<%= hcount %>"><%= entry.circle.author %></td>
+      <td class="entry-circle-author" rowspan="<%= hcount %>"><%= entry.circle.author %></td>
     <% end %>
       <td class="quantity <%= is_first ? "" : "extend" %>">
         <% order_quantity = 0 %>
@@ -116,7 +116,7 @@
           );
 
           $(".entry-"+key+"-name").click(function () {
-            window.location = entryUrlList[key];
+            window.open(entryUrlList[key]);
             return false;
           });
         }

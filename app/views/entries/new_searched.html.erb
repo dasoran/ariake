@@ -13,7 +13,7 @@
     </thead>
     <tbody>
       <% @circles.each do |circle| %>
-      <% is_registered_yet = Entry.where(:event_id => @event.id, :circle_id => circle.id).first.nil? %>
+      <% is_registered_yet = Entry.includes(:map_layout).where("map_layouts.event_id" => @event.id, :circle_id => circle.id).first.nil? %>
       <tr>
         <td><%= circle.name %></td>
         <td><%= circle.author %></td>

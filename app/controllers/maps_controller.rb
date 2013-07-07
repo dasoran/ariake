@@ -8,6 +8,8 @@
 class MapsController < ApplicationController
   # mock data (あとでカタROM の情報に置き換える)
   @@user_color = {"sora_sakaki" => "#55f",
+    "dasoran" => "#5f5",
+
     "xxyuiyaxx" => "#f55"}
 
   # mock data
@@ -23,7 +25,8 @@ class MapsController < ApplicationController
 
     event_name = params[:event] || "c84"
     event = Event.find_by_name event_name.upcase
-    entries = event.entries
+    entries = Entry.includes(:map_layout).
+      where("map_layouts.event_id = %d" % [event.id])
     @entries = []
     entries.each do |entry|
       entry.handouts.each do |handout|
@@ -62,7 +65,8 @@ class MapsController < ApplicationController
 
     event_name = params[:event] || "c84"
     event = Event.find_by_name event_name.upcase
-    entries = event.entries
+    entries = Entry.includes(:map_layout).
+      where("map_layouts.event_id = %d" % [event.id])
     @entries = []
     entries.each do |entry|
       catch(:exit) {
