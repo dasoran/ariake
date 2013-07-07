@@ -9,14 +9,19 @@ class EntriesController < ApplicationController
 
     sortList = {
       "placeup" => "comiket_blocks.name, map_layouts.space_number, sub_place",
-      "placedown" => "comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc"
+      "placedown" => "comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc",
+      "circlenameup" => "circles.name",
+      "circlenamedown" => "circles.name desc",
+      "updatedatup" => "entries.updated_at",
+      "updatedatdown" => "entries.updated_at desc",
       }
 
     if @sort.nil?
-      @entries = Entry.includes(:map_layout).
-        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day])
-    else
       @entries = Entry.includes(:map_layout => :comiket_block).
+        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
+        order("%s" % sortList["placeup"])
+    else
+      @entries = Entry.includes(:map_layout => :comiket_block).includes(:circle).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
         order("%s" % sortList[@sort+@sort_vec])
     end
