@@ -7,23 +7,23 @@
     <th class="place">
       <% if @sort == "place" %>
       <% if @sort_vec == "up" %>
-        <%= link_to "配置↑", entries_path(:day => @day, :sort => "place", :vec => "down") %>
+        <%= link_to "配置↑", "%s?%s%ssort=%s&vec=%s" % [request.path_info, @search_text.nil? ? "" : "search_text=%s&" % [@search_text], @day.nil? ? "" : "day=%d&" % [@day], "place", "down"] %>
       <% else %>
-        <%= link_to "配置↓", entries_path(:day => @day, :sort => "place", :vec => "up") %>
+        <%= link_to "配置↓", "%s?%s%ssort=%s&vec=%s" % [request.path_info, @search_text.nil? ? "" : "search_text=%s&" % [@search_text], @day.nil? ? "" : "day=%d&" % [@day], "place", "up"] %>
       <% end %>
       <% else %>
-        <%= link_to "配置", entries_path(:day => @day, :sort => "place", :vec => "up") %>
+        <%= link_to "配置", "%s?%s%ssort=%s&vec=%s" % [request.path_info, @search_text.nil? ? "" : "search_text=%s&" % [@search_text], @day.nil? ? "" : "day=%d&" % [@day], "place", "up"] %>
       <% end %>
     </th>
     <th>
       <% if @sort == "circlename" %>
       <% if @sort_vec == "up" %>
-        <%= link_to "サークル名↑", entries_path(:day => @day, :sort => "circlename", :vec => "down") %>
+        <%= link_to "サークル名↑", "%s?%s%ssort=%s&vec=%s" % [request.path_info, @search_text.nil? ? "" : "search_text=%s&" % [@search_text], @day.nil? ? "" : "day=%d&" % [@day], "circlename", "down"] %>
       <% else %>
-        <%= link_to "サークル名↓", entries_path(:day => @day, :sort => "circlename", :vec => "up") %>
+        <%= link_to "サークル名↓", "%s?%s%ssort=%s&vec=%s" % [request.path_info, @search_text.nil? ? "" : "search_text=%s&" % [@search_text], @day.nil? ? "" : "day=%d&" % [@day], "circlename", "up"] %>
       <% end %>
       <% else %>
-        <%= link_to "サークル名", entries_path(:day => @day, :sort => "circlename", :vec => "up") %>
+        <%= link_to "サークル名", "%s?%s%ssort=%s&vec=%s" % [request.path_info, @search_text.nil? ? "" : "search_text=%s&" % [@search_text], @day.nil? ? "" : "day=%d&" % [@day], "circlename", "up"] %>
       <% end %>
     </th>
     <th>作家</th>
@@ -33,12 +33,12 @@
     <th>
       <% if @sort == "updatedat" %>
       <% if @sort_vec == "up" %>
-        <%= link_to "最終更新日時↑", entries_path(:day => @day, :sort => "updatedat", :vec => "down") %>
+        <%= link_to "最終更新日時↑", "%s?%s%ssort=%s&vec=%s" % [request.path_info, @search_text.nil? ? "" : "search_text=%s&" % [@search_text], @day.nil? ? "" : "day=%d&" % [@day], "updatedat", "down"] %>
       <% else %>
-        <%= link_to "最終更新日時↓", entries_path(:day => @day, :sort => "updatedat", :vec => "up") %>
+        <%= link_to "最終更新日時↓", "%s?%s%ssort=%s&vec=%s" % [request.path_info, @search_text.nil? ? "" : "search_text=%s&" % [@search_text], @day.nil? ? "" : "day=%d&" % [@day], "updatedat", "up"] %>
       <% end %>
       <% else %>
-        <%= link_to "最終更新日時", entries_path(:day => @day, :sort => "updatedat", :vec => "up") %>
+        <%= link_to "最終更新日時", "%s?%s%ssort=%s&vec=%s" % [request.path_info, @search_text.nil? ? "" : "search_text=%s&" % [@search_text], @day.nil? ? "" : "day=%d&" % [@day], "updatedat", "up"] %>
       <% end %>
     </th>
   </tr>

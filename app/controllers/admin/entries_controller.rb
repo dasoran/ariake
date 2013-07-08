@@ -26,7 +26,45 @@ class Admin::EntriesController < Admin::Base
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
         order("%s" % sortList[@sort+@sort_vec])
     end
+
   end 
+
+  def search
+    @event = Event.find_by_name("C84") 
+
+    @day = params[:day]
+    @sort = params[:sort]
+    @sort_vec = params[:vec]
+
+    sortList = {
+      "placeup" => "comiket_blocks.name, map_layouts.space_number, sub_place",
+      "placedown" => "comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc",
+      "circlenameup" => "circles.name",
+      "circlenamedown" => "circles.name desc",
+      "updatedatup" => "entries.updated_at",
+      "updatedatdown" => "entries.updated_at desc",
+      }
+
+    @search_text = params[:search_text]
+    search_words = params[:search_text].split(" ")
+    @search_sql = []
+    search_words.each do |word|
+      @search_sql << "(circles.name like \"%%%s%%\" or circles.author like \"%%%s%%\")" % [word, word]
+    end
+
+
+    if @sort.nil?
+      @entries = Entry.includes(:map_layout => :comiket_block).
+        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
+        includes(:circle).where(@search_sql.join(" and ")).
+        order("%s" % sortList["placeup"])
+    else
+      @entries = Entry.includes(:map_layout => :comiket_block).includes(:circle).
+        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
+        includes(:circle).where(@search_sql.join(" and ")).
+        order("%s" % sortList[@sort+@sort_vec])
+    end
+  end
  
   def show
     @entry = Entry.find_by_id(params[:id])

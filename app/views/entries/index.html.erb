@@ -1,11 +1,12 @@
 <% @page_title = "Entries" %>
 <div class="entries-content">
-<!--
-<%= form_tag :search_entries, method: :get do %>
-<p><%= text_field_tag "search_form", params[:search_form],:size => 25 %>
-<%= submit_tag "検索" %></p>
-<% end %>
--->
+
+<div class="header-entries clearfix pure-menu pure-menu-open pure-menu-horizontal entries-index-menu">
+  <%= form_tag search_entries_path, :class => "pure-form entries-searchbox", :method => "get" do%>
+    <input name="search_text" class="search_inputbox" type="text" placeholder="">
+    <button type="submit" class="pure-button pure-button-success" id="search-button-in-newentry">検索</button>
+  <% end %>
+</div>
 
 <div class="header-entries clearfix pure-menu pure-menu-open pure-menu-horizontal entries-index-menu">
   <ul>
