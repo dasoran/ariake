@@ -23,7 +23,7 @@ Ariake::Application.routes.draw do
     resource :user do
       collection {post "change_permission"}
     end
-    resource :executor
+    resources :executors, only: [:index, :create, :new]
     resources :entries do
       collection { get "search", "new_searched", "new_detail"}
       member { post "update_all" }

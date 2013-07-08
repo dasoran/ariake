@@ -22,7 +22,7 @@
       <%= link_to "全日程", admin_entries_path %>
     </li>
   </ul>
-<%= link_to "サークルをイベントに追加する", new_entry_path(:event_id => @event.id), :class => "pure-button pure-button-primary entry-new-button" %>
+<%= link_to "サークルをイベントに追加する", new_admin_entry_path(:event_id => @event.id), :class => "pure-button pure-button-primary entry-new-button" %>
 </div>
 
 <%= render "shared/admin_entries_list" %>

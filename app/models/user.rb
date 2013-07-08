@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   attr_accessible :login_id, :name, :password, :administrator, :color,  as: :admin
   attr_accessor :password
   has_many :orders
+  has_many :executors
   validates :login_id,
     format: {with: /\A[A-Za-z]\w*\z/, allow_blank: true},
     length: {minimum: 1, maximum: 30, allow_blank: true},

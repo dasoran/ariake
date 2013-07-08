@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
     else 
       flash[:info] = "変更する個数を変更してから更新ボタンを押してください。"
     end
-    if params[:is_admin]
+    if @current_user.administrator
       redirect_to admin_entry_path(params[:entry_id])
     else
       redirect_to entry_path(params[:entry_id])
@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
     order.quantity = 1
     order.save
     flash[:success] = "希望を追加しました。"
-    if params[:is_admin]
+    if @current_user.administrator
       redirect_to admin_entry_path(params[:entry_id])
     else
       redirect_to entry_path(params[:entry_id])

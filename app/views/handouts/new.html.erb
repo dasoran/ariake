@@ -9,9 +9,6 @@
       <legend>よくある頒布物</legend>
       <input type="hidden" name="entry_id" value="<%= @entry.id %>">
       <input type="hidden" name="in_generic" value="true">
-      <% if @is_admin %>
-        <input type="hidden" name="is_admin" value=<%= true %>>
-      <% end %>
     
       <% @goods.each do |goods| %>
       <% next unless goods.is_generic %>

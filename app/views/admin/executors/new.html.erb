@@ -1,0 +1,38 @@
+<div class="header-none">
+</div>
+
+<div class="entries-content">
+
+  <table class="pure-table entries-table admin-user-table">
+    <thead>
+    <tr>
+      <th>ユーザー</th>
+      <th>色</th>
+      <th>追加</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+    <tr>
+      <td class="name">
+        <%= link_to "%s (%s)" % [user.name, user.login_id], entries_user_path(user.login_id) %>
+      </td>
+      <td class="color" style="background-color: <%= user.color %>">
+        <%= user.color %>
+      </td>
+      <td class="add_executor">
+        <% if @executors_hash.key?(user.id) %>
+          登録済み
+        <% else %>
+        <%= link_to "追加", admin_executors_path(:user_id => user.id, :entry_id => @entry.id), method: :post, :class => "pure-button pure-button-primary url-destroy-button" %>
+        <% end %>
+      </td>
+    </tr>
+      <% end %>
+    </tbody>
+ 
+  </table>
+
+</div>
+

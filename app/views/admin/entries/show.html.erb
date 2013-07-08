@@ -9,7 +9,6 @@
 
 <%= form_tag update_all_orders_path, :class => "pure-form" do%>
   <input type="hidden" name="entry_id" value="<%= @entry.id %>">
-  <input type="hidden" name="is_admin" value="<%= true %>">
 
   <table class="pure-table entry-show-table">
     <tbody>
@@ -55,6 +54,18 @@
       </tr>
       <% end %>
 
+      <tr>
+        <th rowspan="<%= @executors.count+1 %>">購入者</th>
+        <td colspan="4">
+          <%= link_to "追加", new_admin_executor_path(:entry_id => @entry.id), :class => "pure-button pure-button-primary url-destroy-button" %>
+        </td>
+      </tr>
+      <% @executors.each do |executor| %>
+      <tr>
+        <td colspan="4"><%= executor.user.name %></td>
+      </tr>
+      <% end %>
+
       <% ocount = 0 %>
       <% @entry.handouts.each do |handout| %>
       <%   ocount = ocount + handout.orders.count %>
@@ -87,7 +98,7 @@
         <% is_first_sub = false %>
         <% end %>
         <td class="order-name">
-          <%= link_to "希望する", create_from_link_orders_path(:handout_id => handout.id, :entry_id => @entry.id, :is_admin => true), :class => "pure-button pure-button-primary" %>
+          <%= link_to "希望する", create_from_link_orders_path(:handout_id => handout.id, :entry_id => @entry.id), :class => "pure-button pure-button-primary" %>
         </td>
         <td class="order-count">
         </td>

@@ -3,7 +3,6 @@ class HandoutsController < ApplicationController
   def new
     @entry = Entry.find_by_id(params[:entry_id])
     @goods = Goods.all
-    @is_admin = params[:is_admin]
   end
   def create
     if params[:in_generic] == "true"
@@ -31,7 +30,7 @@ class HandoutsController < ApplicationController
       handout.save
     end
     flash[:success] = "頒布物を追加しました。"
-    if params[:is_admin]
+    if @current_user.administrator
       redirect_to admin_entry_path(params[:entry_id])
     else
       redirect_to entry_path(params[:entry_id])
@@ -41,7 +40,7 @@ class HandoutsController < ApplicationController
     handout = Handout.find_by_id(params[:id])
     handout.destroy
     flash[:success] = "頒布物を削除しました。"
-    if params[:is_admin]
+    if @current_user.administrator
       redirect_to admin_entry_path(params[:entry_id])
     else
       redirect_to entry_path(params[:entry_id])

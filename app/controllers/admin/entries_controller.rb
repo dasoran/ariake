@@ -34,6 +34,12 @@ class Admin::EntriesController < Admin::Base
     @event = @map_layout.event
     @block = @map_layout.comiket_block
     @map_e_w_j = @block.comiket_area.name[0]
+
+    if @entry.handouts.count == 0 || @entry.handouts[0].orders.count == 0 then
+      @executors = []
+    else
+      @executors = @entry.handouts[0].orders[0].executors
+    end
   end
 
   def new
