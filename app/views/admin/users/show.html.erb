@@ -15,7 +15,6 @@
 
     <tbody>
       <% @users.each do |user| %>
-      <% next if user.id == @current_user.id %>
     <tr>
       <td class="name">
         <%= link_to "%s (%s)" % [user.name, user.login_id], entries_user_path(user.login_id) %>

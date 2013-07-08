@@ -6,12 +6,10 @@
 <% if @entry.present? %>
   <strong>注意</strong>：サークル名、作家名、URLに関しては、他のイベントでの情報も変更されます。
 
-  <%= form_tag update_all_entry_path(@entry.id), :class => "pure-form" do%>
+  <%= form_tag update_all_admin_entry_path(@entry.id), :class => "pure-form" do%>
   <table class="pure-table entry-show-table">
     <tbody>
-      <tr>
-        <th>参加イベント</th>
-        <td colspan="3">
+      <tr> <th>参加イベント</th> <td colspan="3">
           <select id="event" name="event">
             <% @events.each do |event| %>
             <option value="<%= event.id %>" <%= "selected" if event.id == @event.id%>><%= event.name %></option>
@@ -69,7 +67,7 @@
         <th rowspan="<%= @entry.circle.circle_urls.count + 1 %>">URL</th>
 
         <td class="circle-url-checkbox">
-          <%= link_to "追加", circle_urls_path(:entry_id => @entry.id), method: :post, :class => "pure-button pure-button-primary url-destroy-button", confirm: "サークルのURLを追加しますか？" %>
+          <%= link_to "追加", circle_urls_path(:entry_id => @entry.id, :is_admin => true), method: :post, :class => "pure-button pure-button-primary url-destroy-button", confirm: "サークルのURLを追加しますか？" %>
         </td>
         <td class="circle-url-textform">
         </td>
@@ -79,7 +77,7 @@
       <tr>
         <% if url.is_master_url %>
         <td class="circle-url-master circle-url-checkbox">
-          <%= link_to "削除", circle_url_path(:id => url.id, :entry_id => @entry.id), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "サークルのURLを削除しますか？" %>
+          <%= link_to "削除", circle_url_path(:id => url.id, :entry_id => @entry.id, :is_admin => true), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "サークルのURLを削除しますか？" %>
           <input type="radio" name="masterRadios" value="<%= url.id%>" checked>
           (master)
         </td>
@@ -88,7 +86,7 @@
         </td>
         <% else %>
         <td class="circle-url-checkbox">
-          <%= link_to "削除", circle_url_path(:id => url.id, :entry_id => @entry.id), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "サークルのURLを削除しますか？" %>
+          <%= link_to "削除", circle_url_path(:id => url.id, :entry_id => @entry.id, :is_admin => true), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "サークルのURLを削除しますか？" %>
           <input type="radio" name="masterRadios" value="<%= url.id%>">
         </td>
         <td class="circle-url-textform" colspan="2">
@@ -105,7 +103,7 @@
           頒布物
         </th>
         <td>
-          <%= link_to "追加", new_handout_path(:entry_id => @entry.id), :class => "pure-button pure-button-primary url-destroy-button" %>
+          <%= link_to "追加", new_handout_path(:entry_id => @entry.id, :is_admin => true), :class => "pure-button pure-button-primary url-destroy-button" %>
         </td>
         <td class="handout-name"></td>
         <td class="handout-price"></td>
@@ -113,7 +111,7 @@
       <% @entry.handouts.each do |handout| %>
       <tr>
         <td>
-          <%= link_to "削除", handout_path(:id => handout.id, :entry_id => @entry.id), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "頒布物を削除しますか？" %>
+          <%= link_to "削除", handout_path(:id => handout.id, :entry_id => @entry.id, :is_admin => true), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "頒布物を削除しますか？" %>
         </td>
         <td class="handout-name">
           <input class="pure-input-1" name="handout-<%= handout.id %>" type="text" value="<%= handout.goods.name %>"/>

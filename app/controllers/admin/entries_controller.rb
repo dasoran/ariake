@@ -1,7 +1,6 @@
 # coding: utf-8
-class EntriesController < ApplicationController
-  before_filter :login_required
 
+class Admin::EntriesController < Admin::Base
   def index
     @event = Event.find_by_name("C84") 
 
@@ -28,7 +27,7 @@ class EntriesController < ApplicationController
         order("%s" % sortList[@sort+@sort_vec])
     end
   end 
-  
+ 
   def show
     @entry = Entry.find_by_id(params[:id])
     @map_layout = @entry.map_layout
@@ -86,9 +85,9 @@ class EntriesController < ApplicationController
     flash[:success] = "%s を %s に追加しました。" % [entry.circle.name, Event.find_by_id(params[:event]).name]
 
     if params[:send_button] == "create"
-      redirect_to entries_path
+      redirect_to admin_entries_path
     else
-      redirect_to edit_entry_path(entry.id)
+      redirect_to edit_admin_entry_path(entry.id)
     end
   end
 
@@ -121,7 +120,7 @@ class EntriesController < ApplicationController
   def destroy
     entry = Entry.find_by_id(params[:id])
     entry.destroy
-    redirect_to entries_path, success: "削除しました。"
+    redirect_to admin_entries_path, success: "削除しました。"
   end
 
   def update_all
@@ -225,12 +224,12 @@ class EntriesController < ApplicationController
  
 
 
-
     if is_change then
       flash[:success] = "サークルのイベント登録情報を変更しました。"
     else 
       flash[:info] = "変更がありません。"
     end
-    redirect_to entry_path(params[:id])
+    redirect_to admin_entry_path(params[:id])
   end
+
 end

@@ -21,7 +21,11 @@ class OrdersController < ApplicationController
     else 
       flash[:info] = "変更する個数を変更してから更新ボタンを押してください。"
     end
-    redirect_to entry_path(params[:entry_id])
+    if params[:is_admin]
+      redirect_to admin_entry_path(params[:entry_id])
+    else
+      redirect_to entry_path(params[:entry_id])
+    end
   end
   def create_from_link
     handout_id = params[:handout_id]
@@ -31,6 +35,10 @@ class OrdersController < ApplicationController
     order.quantity = 1
     order.save
     flash[:success] = "希望を追加しました。"
-    redirect_to entry_path(params[:entry_id])
+    if params[:is_admin]
+      redirect_to admin_entry_path(params[:entry_id])
+    else
+      redirect_to entry_path(params[:entry_id])
+    end
   end
 end

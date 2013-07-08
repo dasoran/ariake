@@ -12,13 +12,21 @@ class CircleUrlsController < ApplicationController
     circle_url.is_master_url = present_master_url.nil?
     circle_url.save
     flash[:success] = "URLを追加しました。"
-    redirect_to edit_entry_path(params[:entry_id])
+    if params[:is_admin]
+      redirect_to edit_admin_entry_path(params[:entry_id])
+    else
+      redirect_to edit_entry_path(params[:entry_id])
+    end
   end
   def destroy
     circle_url = CircleUrl.find_by_id(params[:id])
     circle_url.destroy
     circle_url.save
     flash[:success] = "URLを削除しました。"
-    redirect_to edit_entry_path(params[:entry_id])
+    if params[:is_admin]
+      redirect_to edit_admin_entry_path(params[:entry_id])
+    else
+      redirect_to edit_entry_path(params[:entry_id])
+    end
   end
 end

@@ -1,0 +1,31 @@
+<% @page_title = "Entries" %>
+<div class="entries-content">
+<!--
+<%= form_tag :search_entries, method: :get do %>
+<p><%= text_field_tag "search_form", params[:search_form],:size => 25 %>
+<%= submit_tag "検索" %></p>
+<% end %>
+-->
+
+<div class="header-entries clearfix pure-menu pure-menu-open pure-menu-horizontal entries-index-menu">
+  <ul>
+    <li class= <%= @day == "1" ? "pure-menu-selected" : "" %> >
+      <%= link_to "1日目", admin_entries_path(:day => "1") %>
+    </li>
+    <li class= <%= @day == "2" ? "pure-menu-selected" : "" %> >
+      <%= link_to "2日目", admin_entries_path(:day => "2") %>
+    </li>
+    <li class= <%= @day == "3" ? "pure-menu-selected" : "" %> >
+      <%= link_to "3日目", admin_entries_path(:day => "3") %>
+    </li>
+    <li class= <%= @day.nil? ? "pure-menu-selected" : "" %> >
+      <%= link_to "全日程", admin_entries_path %>
+    </li>
+  </ul>
+<%= link_to "サークルをイベントに追加する", new_entry_path(:event_id => @event.id), :class => "pure-button pure-button-primary entry-new-button" %>
+</div>
+
+<%= render "shared/admin_entries_list" %>
+
+</div>
+

@@ -1,0 +1,177 @@
+
+<% if @entries.present? %>
+<table class="pure-table entries-table">
+  <thead>
+  <tr>
+    <th>日</th>
+    <th class="place">
+      <% if @sort == "place" %>
+      <% if @sort_vec == "up" %>
+        <%= link_to "配置↑", admin_entries_path(:day => @day, :sort => "place", :vec => "down") %>
+      <% else %>
+        <%= link_to "配置↓", admin_entries_path(:day => @day, :sort => "place", :vec => "up") %>
+      <% end %>
+      <% else %>
+        <%= link_to "配置", admin_entries_path(:day => @day, :sort => "place", :vec => "up") %>
+      <% end %>
+    </th>
+    <th>
+      <% if @sort == "circlename" %>
+      <% if @sort_vec == "up" %>
+        <%= link_to "サークル名↑", admin_entries_path(:day => @day, :sort => "circlename", :vec => "down") %>
+      <% else %>
+        <%= link_to "サークル名↓", admin_entries_path(:day => @day, :sort => "circlename", :vec => "up") %>
+      <% end %>
+      <% else %>
+        <%= link_to "サークル名", admin_entries_path(:day => @day, :sort => "circlename", :vec => "up") %>
+      <% end %>
+    </th>
+    <th>作家</th>
+    <th>購入数</th>
+    <th>希望数</th>
+    <th>頒布物</th>
+    <th>価格</th>
+    <th>
+      <% if @sort == "updatedat" %>
+      <% if @sort_vec == "up" %>
+        <%= link_to "最終更新日時↑", admin_entries_path(:day => @day, :sort => "updatedat", :vec => "down") %>
+      <% else %>
+        <%= link_to "最終更新日時↓", admin_entries_path(:day => @day, :sort => "updatedat", :vec => "up") %>
+      <% end %>
+      <% else %>
+        <%= link_to "最終更新日時", admin_entries_path(:day => @day, :sort => "updatedat", :vec => "up") %>
+      <% end %>
+    </th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <script type="text/javascript">
+      var entryUrlList = {};
+    </script>
+  <% @entries.each do |entry| %>
+    <script type="text/javascript">
+      <% page_url = "" %>
+      <% entry.circle.circle_urls.each do |url|%>
+      <%   page_url = url.page_url if url.is_master_url %>
+      <% end %>
+      entryUrlList[<%= entry.id %>] = '<%= page_url == "" ? "#" :page_url %>';
+    </script>
+　　<% is_first = true %>
+    <% if entry.handouts.count == 0 %>
+    <tr class="entry-row entry-<%= entry.id %>">
+      <td class="attend-at"><%= entry.attend_at %></td>
+      <td class="place">
+        <% block = entry.map_layout.comiket_block %>
+        <%= block.comiket_area.name[0] %><%= block.name %>-<%= entry.map_layout.space_number %><%= entry.sub_place %>
+      </td>
+      <td class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
+      <td class="entry-circle-author"><%= entry.circle.author %></td>
+      <td class="executor"></td>
+      <td class="quantity"></td>
+      <td></td>
+      <td class="price"></td>
+      <td class="updated-at"><%= entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S")%></td>
+    </tr>
+    <% else %>
+    <% hcount = entry.handouts.length %>
+    <% entry.handouts.each do |handout| %>
+    <tr class="entry-row entry-<%= entry.id %>">
+      <% if is_first == true %>
+      <td class="attend-at" rowspan="<%= hcount %>"><%= entry.attend_at %></td>
+      <td class="place" rowspan="<%= hcount %>">
+        <% block = entry.map_layout.comiket_block %>
+        <%= block.comiket_area.name[0] %><%= block.name %>-<%= entry.map_layout.space_number %><%= entry.sub_place %>
+      </td>
+      <td rowspan="<%= hcount %>" class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
+      <td class="entry-circle-author" rowspan="<%= hcount %>"><%= entry.circle.author %></td>
+      <td class="executor" rowspan="<%= hcount %>"><%= entry.handouts[0].orders[0].executors.count %></td>
+    <% end %>
+      <td class="quantity <%= is_first ? "" : "extend" %>">
+        <% order_quantity = 0 %>
+        <% handout.orders.each do |order| %>
+        <% order_quantity = order_quantity + order.quantity %>
+        <% end %>
+        <%= order_quantity %>
+      </td>
+      <td class="<%= is_first ? "" : "extend" %>">
+        <%= handout.goods.name %>
+      </td>
+      <td class="price <%= is_first ? "" : "extend" %>">
+        <%= handout.goods.price %>
+      </td>
+      <% if is_first == true %>
+      <td class="updated-at" rowspan="<%= hcount %>"><%= entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S")%></td>
+      <% end %>
+    </tr>
+    <% is_first = false %>
+    <% end %>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+
+<script type="text/javascript">
+  (function () {
+    var entriesList = {};
+    $(".entry-row").each(function () {
+      var entryId = $(this).attr('class').split(' ')[1].split('-')[1];
+      if (entriesList[entryId] == undefined) {
+        entriesList[entryId] = [];
+      }
+      entriesList[entryId].push(this);
+    });
+    
+    for (var key in entriesList) {
+      (function (key) {
+        var entries = entriesList[key];
+        
+        if (entryUrlList[key] != "#") {
+
+          $(".entry-"+key+"-name").hover(
+            function () {
+              $(".entry-"+key+"-name").addClass("entries-name-selected");
+            },
+            function () {
+              $(".entry-"+key+"-name").removeClass("entries-name-selected");
+            }
+          );
+
+          $(".entry-"+key+"-name").click(function () {
+            window.open(entryUrlList[key]);
+            return false;
+          });
+        }
+
+
+        for (var entryKey in entries) {
+          (function (entryKey) {
+            var entry = entries[entryKey];
+            $(entry).hover(
+              function () {
+                for (var eKeyTmp in entries) {
+                  $(entries[eKeyTmp]).addClass("entries-selected");
+                }
+              },
+              function () {
+                for (var eKeyTmp in entries) {
+                  $(entries[eKeyTmp]).removeClass("entries-selected");
+                }
+              }
+            );
+            $(entry).click(function () {
+              window.location = "/admin/entries/"+key;
+            });
+          })(entryKey)
+        }
+      })(key)
+    }
+  })();
+</script>
+
+
+<% else %>
+  <p>サークル情報がありません</p>
+<% end %>
+
