@@ -62,7 +62,11 @@
       </tr>
       <% @executors.each do |executor| %>
       <tr>
-        <td colspan="4"><%= executor.user.name %></td>
+        <td class="executor" colspan="4" style="background-color: <%= executor.user.color %>">
+          <%= link_to "削除", admin_executor_path(executor.id, :entry_id => @entry.id), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "購入者を削除しますか？" %>
+          <%= executor.user.name %>
+
+        </td>
       </tr>
       <% end %>
 

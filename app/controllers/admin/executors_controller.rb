@@ -47,4 +47,21 @@ class Admin::ExecutorsController < Admin::Base
     flash[:success] = "購入者を追加しました。"
     redirect_to admin_entry_path(@entry.id)
   end
+  def destroy
+    @entry = Entry.find_by_id(params[:entry_id])
+    @executor = Executor.find_by_id(params[:id])
+    user = @executor.user
+
+    @entry.handouts.each do |handout|
+      handout.orders.each do |order|
+        order.executors.each do |executor|
+          next unless executor.user.id == user.id
+          executor.destroy
+        end
+      end
+    end
+
+    flash[:success] = "購入者を削除しました。"
+    redirect_to admin_entry_path(@entry.id)
+  end
 end

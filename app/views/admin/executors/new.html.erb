@@ -18,7 +18,7 @@
       <td class="name">
         <%= link_to "%s (%s)" % [user.name, user.login_id], entries_user_path(user.login_id) %>
       </td>
-      <td class="color" style="background-color: <%= user.color %>">
+      <td class="executor_color" style="background-color: <%= user.color %>">
         <%= user.color %>
       </td>
       <td class="add_executor">
