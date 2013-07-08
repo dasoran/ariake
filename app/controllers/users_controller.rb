@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   end
   def create
     @user = User.new(params[:user])
+    @user.administrator = false
     if @user.save
       redirect_to :root, success: "登録が完了しました。"
     else

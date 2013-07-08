@@ -6,6 +6,8 @@
 
 
 class MapsController < ApplicationController
+  before_filter :login_required
+
   # mock data (あとでカタROM の情報に置き換える)
   @@user_color = {"sora_sakaki" => "#55f",
     "dasoran" => "#5f5",

@@ -5,11 +5,11 @@
 <%= form_for @user ,:html => {:class => "pure-form pure-form-stacked"} do |form|%>
 <fieldset>
   <legend>アカウントの新規登録</legend>
-  <%= form.label :login_id, "loginID" %>
+  <%= form.label :login_id, "loginID (ログイン時に使用するID。使用可能文字：a-z,A-Z,0-9)" %>
   <%= form.text_field :login_id, placeholder: "loginID" %>
-  <%= form.label :name, "Username" %>
+  <%= form.label :name, "Username (表示名。日本語可)" %>
   <%= form.text_field :name, placeholder: "Username" %>
-  <%= form.label :password, "Password" %>
+  <%= form.label :password, "Password (ログイン時に使用するパスワード。使用可能文字：a-z,A-Z,0-9)" %>
   <%= form.password_field :password, placeholder: "Password", id: "pass_form" %>
   <button type="submit" class="pure-button pure-button-success" id="regist-button">登録する</button>
 </fieldset>

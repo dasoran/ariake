@@ -18,4 +18,9 @@ Ariake::Application.routes.draw do
   resources :circle_urls, only: [:create, :destroy]
   resources :circles
   resources :handouts, only: [:new, :create, :destroy]
+  
+  namespace :admin do
+    resource :user
+  end
+
 end

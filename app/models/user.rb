@@ -3,14 +3,14 @@ class User < ActiveRecord::Base
   attr_accessible :login_id, :name, :password
   attr_accessor :password
   has_many :orders
-  validates :login_id, presence: true,
-    format: {with: /\A[A-Za-z]\w*\z/, allow_blank: true},
+  validates :login_id,
+    format: {with: /\A[A-Za-z0-9]\w*\z/, allow_blank: true},
     length: {minimum: 1, maximum: 30, allow_blank: true},
     uniqueness: {case_sensitive: false}
-  validates :name, presence: true,
+  validates :name,
     length: {minimum: 1, maximum: 30, allow_blank: true}
-  validates :password, presence: true,
-    format: {with: /\A[A-Za-z]\w*\z/, allow_blank: true},
+  validates :password,
+    format: {with: /\A[A-Za-z0-9]\w*\z/, allow_blank: true},
     length: {minimum: 1, maximum: 30, allow_blank: true}
 
   def password=(val)

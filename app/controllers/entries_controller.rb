@@ -1,5 +1,7 @@
 # coding: utf-8
 class EntriesController < ApplicationController
+  before_filter :login_required
+
   def index
     @event = Event.find_by_name("C84") 
 

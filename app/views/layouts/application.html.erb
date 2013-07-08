@@ -45,6 +45,16 @@
       </li>
 <!-- user.show の代わり -->
 
+      <% if @current_user.try(:administrator) %>
+<!-- admin -->
+      <li class="
+      <%= request.path_info == "/admin/user" ? "pure-menu-selected" : ""%>
+      menu-item-divided">
+    <%= link_to "ユーザーの管理", admin_user_path %>
+      </li>
+<!-- admin -->
+      <% end %>
+
       
       <li class="
       <%= request.path_info == "/entries"? "pure-menu-selected" : ""%>
