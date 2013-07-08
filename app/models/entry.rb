@@ -4,6 +4,7 @@ class Entry < ActiveRecord::Base
   belongs_to :map_layout
   has_many :handouts
   before_create :set_goods_updated_at_to_now
+  before_update :set_goods_updated_at_to_now
   def set_goods_updated_at_to_now
     self.goods_updated_at = Time.now
   end

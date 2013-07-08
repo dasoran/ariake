@@ -7,7 +7,8 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     @user.administrator = false
     if @user.save
-      redirect_to :root, success: "登録が完了しました。"
+      flash[:success] = "登録が完了しました。"
+      redirect_to :root
     else
       flash[:error] = "エラー：フォームの入力事項を確認してください。"
       render "new"

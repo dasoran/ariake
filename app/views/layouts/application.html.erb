@@ -52,15 +52,27 @@
       menu-item-divided">
     <%= link_to "ユーザーの管理", admin_user_path %>
       </li>
-<!-- admin -->
-      <% end %>
+      <li class="
+      <%= request.path_info == "/admin/executor" ? "pure-menu-selected" : ""%>
+      ">
+    <%= link_to "購入者配置", admin_executor_path %>
+      </li>
 
       
+      <li class="
+      <%= request.path_info == "/admin/entries"? "pure-menu-selected" : ""%>
+      menu-item-divided">
+        <%= link_to "Entries", admin_entries_path %>
+      </li>
+<!-- admin -->
+      <% else %>
+
       <li class="
       <%= request.path_info == "/entries"? "pure-menu-selected" : ""%>
       menu-item-divided">
         <%= link_to "Entries", entries_path %>
       </li>
+      <% end %>
     
       <li class="
       <%= request.path_info == "/maps"? "pure-menu-selected" : ""%>

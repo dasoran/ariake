@@ -2,23 +2,55 @@
 </div>
 
 <div class="entries-content">
-  <table class="pure-table entries-table">
+
+  <%= form_tag change_permission_admin_user_path, :class => "pure-form" do%>
+  <table class="pure-table entries-table admin-user-table">
     <thead>
     <tr>
       <th>ユーザー</th>
+      <th>色</th>
       <th>権限</th>
     </tr>
     </thead>
 
     <tbody>
       <% @users.each do |user| %>
-    <tr>
       <% next if user.id == @current_user.id %>
-      <td><%= user.name %> (<%= user.login_id %>)</td>
-      <td><%= user.administrator ? "管理者" : "一般ユーザー" %></td>
+    <tr>
+      <td class="name">
+        <%= link_to "%s (%s)" % [user.name, user.login_id], entries_user_path(user.login_id) %>
+      </td>
+      <td class="color">
+        <select name="color-<%= user.id %>" style="background-color: <%= user.color %>">
+          <% @color_list.each do |color| %>
+          <option value="<%= color %>" <%= "selected" if color == user.color %> style="background-color: <%= color %>"><%= color %></option>
+          <% end %>
+        </select>
+      </td>
+      <td class="permission">
+        <label for="permissionnormal" class="pure-radio">
+          <input id="permissionnormal" type="radio" name="permission-<%=user.id%>" value="normal" <%= "checked" unless user.administrator %>>
+          一般ユーザー
+        </label>
+        <label for="permissionadmin" class="pure-radio">
+          <input id="permissionadmin" type="radio" name="permission-<%=user.id%>" value="admin" <%= "checked" if user.administrator %>>
+          管理者
+        </label>
+      </td>
     </tr>
       <% end %>
     </tbody>
  
   </table>
+
+  <button type="submit" class="pure-button pure-button-secondary" id="update-entry-button">更新する</button>
+
+  <% end %>
+
+
+  <script type="text/javascript">
+    $('select').change(function () {
+      $(this).css('background-color', $(this).val());
+    });
+  </script>
 </div>

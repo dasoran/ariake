@@ -20,7 +20,14 @@ Ariake::Application.routes.draw do
   resources :handouts, only: [:new, :create, :destroy]
   
   namespace :admin do
-    resource :user
+    resource :user do
+      collection {post "change_permission"}
+    end
+    resource :executor
+    resources :entries do
+      collection { get "search", "new_searched", "new_detail"}
+      member { post "update_all" }
+    end
   end
 
 end
