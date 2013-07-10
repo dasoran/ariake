@@ -50,9 +50,9 @@
         <% is_first = false %>
         <% end %>
         <% if url.is_master_url %>
-        <td class="circle-url-master" colspan="4"><a href="<%= url.page_url %>"><%= url.page_url %></a> (master)</td>
+        <td class="circle-url-master" colspan="4"><a href="<%= url.page_url %>" target="_blank"><%= url.page_url %></a> (master)</td>
         <% else %>
-        <td colspan="4"><a href="<%= url.page_url %>"><%= url.page_url %></a></td>
+        <td colspan="4"><a href="<%= url.page_url %>" target="_blank"><%= url.page_url %></a></td>
         <% end %>
       </tr>
       <% end %>
