@@ -27,7 +27,7 @@
       <% end %>
     </th>
     <th>作家</th>
-    <th>購入数</th>
+    <th>購入者</th>
     <th>希望数</th>
     <th>頒布物</th>
     <th>価格</th>
@@ -85,7 +85,13 @@
       </td>
       <td rowspan="<%= hcount %>" class="entry-<%= entry.id %>-name"><%= entry.circle.name %></td>
       <td class="entry-circle-author" rowspan="<%= hcount %>"><%= entry.circle.author %></td>
-      <td class="executor" rowspan="<%= hcount %>"><%= entry.handouts[0].orders[0].executors.count %></td>
+      <td class="executor" rowspan="<%= hcount %>">
+      <% unless entry.handouts[0].orders.count == 0 %>
+      <%= entry.handouts[0].orders[0].executors.count %>
+      <% else %>
+      <%= 0 %>
+      <% end %>
+      </td>
     <% end %>
       <td class="quantity <%= is_first ? "" : "extend" %>">
         <% order_quantity = 0 %>

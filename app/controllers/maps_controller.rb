@@ -2,19 +2,11 @@
 # このコントローラはコミケ専用
 # イベントごとにMAP用のコントローラを作る。
 # 
-# MAPの値固定の話は、画像から取得等を別途考える
-
+# MAPの値固定の話は、画像から取得等を別途考える 
 
 class MapsController < ApplicationController
   before_filter :login_required
 
-  # mock data (あとでカタROM の情報に置き換える)
-  @@user_color = {"sora_sakaki" => "#55f",
-    "dasoran" => "#5f5",
-
-    "xxyuiyaxx" => "#f55"}
-
-  # mock data
 
   def index
     area_to_str = { "e" => "東", "w" => "西" }
@@ -41,8 +33,10 @@ class MapsController < ApplicationController
 
           exe_users = []
           handout.orders.each do |order|
-            unless order.executor.nil?
-              exe_users << User.find_by_id(order.executor.user_id)
+            unless order.executors.count == 0
+              order.executors.each do |executor|
+                exe_users << User.find_by_id(executor.user_id)
+              end
             end
           end
           @entries << {"entry" => entry, "exe_users" => exe_users}
@@ -50,7 +44,6 @@ class MapsController < ApplicationController
         end
       end
     end
-    @user_color = @@user_color
 
     render "index"
   end
@@ -94,8 +87,6 @@ class MapsController < ApplicationController
  
 
 
-    @comiket_layout = @@comiket_layout
-    @user_color = @@user_color
     render "index"
   end
 end

@@ -10,8 +10,8 @@ class EntriesController < ApplicationController
     @sort_vec = params[:vec]
 
     sortList = {
-      "placeup" => "comiket_blocks.name, map_layouts.space_number, sub_place",
-      "placedown" => "comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc",
+      "placeup" => "entries.attend_at, comiket_blocks.name, map_layouts.space_number, sub_place",
+      "placedown" => "entries.attend_at desc, comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc",
       "circlenameup" => "circles.name",
       "circlenamedown" => "circles.name desc",
       "updatedatup" => "entries.updated_at",
@@ -214,20 +214,22 @@ class EntriesController < ApplicationController
       entry.circle.save
     end
 
-    master_url_id = params[:masterRadios].to_i
-    master_url = CircleUrl.find_by_id(master_url_id)
-    present_master_url = CircleUrl.where(circle_id: entry.circle.id, is_master_url: true).first
-    if present_master_url.nil?
-      master_url.is_master_url = true
-      is_change = true
-      master_url.save
-    else
-      unless master_url_id == present_master_url.id
-        present_master_url.is_master_url = false
+    unless entry.circle.circle_urls.count == 0 then
+      master_url_id = params[:masterRadios].to_i
+      master_url = CircleUrl.find_by_id(master_url_id)
+      present_master_url = CircleUrl.where(circle_id: entry.circle.id, is_master_url: true).first
+      if present_master_url.nil?
         master_url.is_master_url = true
         is_change = true
-        present_master_url.save
         master_url.save
+      else
+        unless master_url_id == present_master_url.id
+          present_master_url.is_master_url = false
+          master_url.is_master_url = true
+          is_change = true
+          present_master_url.save
+          master_url.save
+        end
       end
     end
 

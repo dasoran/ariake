@@ -11,7 +11,7 @@
     <% layout = entry.map_layout %>
     <% unless exe_users.count == 0 %>
     <div class="marker marker_<%= layout["layout"] %>"
-      style="left: <%= layout.x %>px; top: <%= layout.y %>px; background-color: <%= @user_color[exe_users[0].login_id] %>">
+      style="left: <%= layout.x %>px; top: <%= layout.y %>px; background-color: <%= exe_users[0].color %>">
     </div>
     <% end %>
   <% end %>
@@ -25,7 +25,7 @@
     <% block = map_layout.comiket_block %>
     <% unless exe_users.count == 0 %>
     <div class="info_element"
-      style="background-color: <%= @user_color[exe_users[0].login_id] %>">
+      style="background-color: <%= exe_users[0].color %>">
       <%= "%s%s-%s%s" % [block.comiket_area.name[0], block.name, map_layout.space_number, entry.sub_place] %>, 
       <%= entry.circle.name %>
     </div>
