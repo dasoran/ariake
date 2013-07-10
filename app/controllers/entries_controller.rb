@@ -8,6 +8,7 @@ class EntriesController < ApplicationController
     @day = params[:day]
     @sort = params[:sort]
     @sort_vec = params[:vec]
+    @page = params[:page].nil? ? 1 : params[:page]
 
     sortList = {
       "placeup" => "entries.attend_at, comiket_blocks.name, map_layouts.space_number, sub_place",
@@ -21,11 +22,13 @@ class EntriesController < ApplicationController
     if @sort.nil?
       @entries = Entry.includes(:map_layout => :comiket_block).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
-        order("%s" % sortList["placeup"])
+        order("%s" % sortList["placeup"]).
+        paginate(page: @page, per_page: 20)
     else
       @entries = Entry.includes(:map_layout => :comiket_block).includes(:circle).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
-        order("%s" % sortList[@sort+@sort_vec])
+        order("%s" % sortList[@sort+@sort_vec]).
+        paginate(page: @page, per_page: 20)
     end
   end 
 

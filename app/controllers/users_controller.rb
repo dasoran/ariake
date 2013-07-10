@@ -23,12 +23,15 @@ class UsersController < ApplicationController
   def entries
     @event = Event.find_by_name("C84") 
     @user = User.find_by_login_id(params[:id])
+    @page = params[:page].nil? ? 1 : params[:page]
 
     @day = params[:day]
     if @day == "1" || @day == "2" || @day == "3"
-      @entries = Entry.includes(:handouts => :orders).includes(:map_layout).where("map_layouts.event_id = %d and attend_at = %d and orders.user_id = '%s'" % [@event.id, @day, @user.id]).uniq
+      @entries = Entry.includes(:handouts => :orders).includes(:map_layout).where("map_layouts.event_id = %d and attend_at = %d and orders.user_id = '%s'" % [@event.id, @day, @user.id]).uniq.
+        paginate(page: @page, per_page: 20)
     else
-      @entries = Entry.includes(:handouts => :orders).includes(:map_layout).where("map_layouts.event_id = %d and orders.user_id = '%s'" % [@event.id, @user.id]).uniq
+      @entries = Entry.includes(:handouts => :orders).includes(:map_layout).where("map_layouts.event_id = %d and orders.user_id = '%s'" % [@event.id, @user.id]).uniq.
+        paginate(page: @page, per_page: 20)
     end
 
   end

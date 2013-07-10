@@ -40,3 +40,5 @@ gem 'bcrypt-ruby', '~> 3.0.0', require: 'bcrypt'
 
 gem 'therubyracer'
 
+gem 'will_paginate', '~> 3.0'
+

@@ -1,0 +1,7 @@
+# coding: utf-8
+
+ja:
+  will_paginate:
+    previous_label: "前"
+    next_label: "次"
+
