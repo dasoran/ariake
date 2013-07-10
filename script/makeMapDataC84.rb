@@ -45,6 +45,7 @@ end
 f = open("data/C84/C82MAP.TXT", "r:utf-16le")
 f.each do |line|
   block_name, space_number, x, y, layout = line.split("\n")[0].split("\t")
+  block_name = NKF::nkf("-WwZ1", block_name)
   block = ComiketBlock.find_by_name(block_name)
   map_layout = MapLayout.where(event_id: event.id,
     comiket_block_id: block.id,
