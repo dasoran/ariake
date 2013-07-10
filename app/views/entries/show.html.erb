@@ -4,9 +4,12 @@
 
 <div class="entries-content">
 <% if @entry.present? %>
-  <%= link_to "編集する", edit_entry_path, :class => "pure-button pure-button-secondary entry-edit-button" %>
-  <%= link_to "削除する", entry_path, method: :delete, :class => "pure-button pure-button-error entry-edit-button", confirm: "イベント登録情報を削除しますか？" %>
 
+<% unless @entry.is_pending %>
+<%= link_to "編集する", edit_entry_path, :class => "pure-button pure-button-secondary entry-edit-button" %>
+<%= link_to "削除する", entry_path, method: :delete, :class => "pure-button pure-button-error entry-edit-button", confirm: "イベント登録情報を削除しますか？" %>
+
+<% end %>
 <%= form_tag update_all_orders_path, :class => "pure-form" do%>
   <input type="hidden" name="entry_id" value="<%= @entry.id %>">
 
@@ -76,7 +79,9 @@
         <% if is_first %>
         <th rowspan="<%= ocount %>">
           頒布物<br>
+          <% unless @entry.is_pending %>
           <button type="submit" class="pure-button pure-button-secondary">希望更新</button>
+          <% end %>
         </th>
         <% is_first = false %>
         <% end %>
@@ -86,7 +91,9 @@
         <% is_first_sub = false %>
         <% end %>
         <td class="order-name">
+          <% unless @entry.is_pending %>
           <%= link_to "希望する", create_from_link_orders_path(:handout_id => handout.id, :entry_id => @entry.id), :class => "pure-button pure-button-primary" %>
+          <% end %>
         </td>
         <td class="order-count">
         </td>
@@ -98,7 +105,9 @@
         <% if is_first %>
         <th rowspan="<%= ocount %>">
           頒布物<br>
+          <% unless @entry.is_pending %>
           <button type="submit" class="pure-button pure-button-secondary">希望更新</button>
+          <% end %>
         </th>
         <% is_first = false %>
         <% end %>
@@ -111,7 +120,7 @@
         <%= order.user.name %>
         </td>
         <td class="order-count">
-          <% if order.user.id == @current_user.id %>
+          <% if (order.user.id == @current_user.id) and @entry.is_pending? == false %>
           <input name="quantity-<%= order.id %>" type="text" value="<%= order.quantity %>" class="pure-u"/>
           <% else %>
           <%= order.quantity %>

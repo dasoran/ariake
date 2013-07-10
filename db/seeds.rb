@@ -12,4 +12,5 @@ Event.create(name: "C84", begin_at: "2013/08/09 00:00:00", end_at: "2013/08/11 2
 Goods.create({"name" => "新刊セット", "price" => 0, "is_generic" => true})
 Goods.create({"name" => "新刊", "price" => 0, "is_generic" => true})
 Goods.create({"name" => "新作グッズ", "price" => 0, "is_generic" => true})
+Goods.create({"name" => "保留", "price" => 0, "is_generic" => false})
 

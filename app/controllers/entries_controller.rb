@@ -120,6 +120,7 @@ class EntriesController < ApplicationController
     entry.attend_at = params[:day].to_i
     entry.map_layout_id = map_layout.id
     entry.sub_place = params[:sub_place]
+    entry.is_pending = false;
     entry.save
 
     flash[:success] = "%s を %s に追加しました。" % [entry.circle.name, Event.find_by_id(params[:event]).name]

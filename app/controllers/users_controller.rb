@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     @user.administrator = false
+    @user.color = "#000000";
     if @user.save
       flash[:success] = "登録が完了しました。"
       redirect_to :root

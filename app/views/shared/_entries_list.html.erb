@@ -58,7 +58,7 @@
     </script>
 　　<% is_first = true %>
     <% if entry.handouts.count == 0 %>
-    <tr class="entry-row entry-<%= entry.id %>">
+    <tr class="entry-row entry-<%= entry.id %> <%= "entry-pending" if entry.is_pending %>">
       <td class="attend-at"><%= entry.attend_at %></td>
       <td class="place">
         <% block = entry.map_layout.comiket_block %>
@@ -74,7 +74,7 @@
     <% else %>
     <% hcount = entry.handouts.length %>
     <% entry.handouts.each do |handout| %>
-    <tr class="entry-row entry-<%= entry.id %>">
+    <tr class="entry-row entry-<%= entry.id %> <%= "entry-pending" if entry.is_pending %>">
       <% if is_first == true %>
       <td class="attend-at" rowspan="<%= hcount %>"><%= entry.attend_at %></td>
       <td class="place" rowspan="<%= hcount %>">

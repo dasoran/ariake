@@ -78,6 +78,7 @@ class Admin::EntriesController < Admin::Base
     else
       @executors = @entry.handouts[0].orders[0].executors
     end
+    render "show"
   end
 
   def new

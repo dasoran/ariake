@@ -1,5 +1,5 @@
 class Entry < ActiveRecord::Base
-  attr_accessible :circle_id, :attend_at, :map_layout_id, :sub_place, :goods_updated_at, :updated_at, :notice
+  attr_accessible :circle_id, :attend_at, :map_layout_id, :sub_place, :goods_updated_at, :updated_at, :notice, :is_pending
   belongs_to :circle
   belongs_to :map_layout
   has_many :handouts
