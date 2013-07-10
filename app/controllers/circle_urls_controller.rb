@@ -5,7 +5,7 @@ class CircleUrlsController < ApplicationController
     entry = Entry.find_by_id(params[:entry_id])
 
     circle_url.circle_id = entry.circle.id
-    circle_url.page_url = "http://"
+    circle_url.page_url = ""
     circle_url.page_attr = "web"
 
     present_master_url = CircleUrl.where(circle_id: entry.circle.id, is_master_url: true).first
