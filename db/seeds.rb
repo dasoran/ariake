@@ -8,6 +8,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
+Event.create(name: "C84", begin_at: "2013/08/09 00:00:00", end_at: "2013/08/11 23:59:59")
 Goods.create({"name" => "新刊セット", "price" => 0, "is_generic" => true})
 Goods.create({"name" => "新刊", "price" => 0, "is_generic" => true})
 Goods.create({"name" => "新作グッズ", "price" => 0, "is_generic" => true})
