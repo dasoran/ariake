@@ -3,6 +3,7 @@ class EntriesController < ApplicationController
   before_filter :login_required
 
   def index
+    per_page = 40
     @event = Event.find_by_name("C84") 
 
     @day = params[:day]
@@ -23,12 +24,12 @@ class EntriesController < ApplicationController
       @entries = Entry.includes(:map_layout => :comiket_block).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
         order("%s" % sortList["placeup"]).
-        paginate(page: @page, per_page: 20)
+        paginate(page: @page, per_page: per_page)
     else
       @entries = Entry.includes(:map_layout => :comiket_block).includes(:circle).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
         order("%s" % sortList[@sort+@sort_vec]).
-        paginate(page: @page, per_page: 20)
+        paginate(page: @page, per_page: per_page)
     end
   end 
 
