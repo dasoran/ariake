@@ -500,8 +500,24 @@ aside {
   }
   tbody tr td.place {
     width: 60px;
+    white-space: nowrap;
+  }
+  tbody tr td.entry-circle-name {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 5%;
   }
   tbody tr td.entry-circle-author {
+    white-space: nowrap
+  }
+  tbody tr td.want {
+    white-space: nowrap;
+    min-width: 270px;
+    border-left: 1px solid #ddd;
+  }
+  tbody tr td.goodsname {
+    white-space: nowrap;
+    overflow: hidden;
   }
   tbody tr td.executor {
     width: 40px;
@@ -515,7 +531,15 @@ aside {
   tbody tr td.updated-at {
     width: 130px;
   }
+  tbody tr td.memo {
+    min-width: 150px;
+  }
 }
+
+.print-table {
+  color: #000;
+}
+
 
 
 .entries-selected {
@@ -596,6 +620,11 @@ td.entries-name-selected {
 .entry-new-button {
   float: right;
 }
+
+.entry-printlayout-button {
+  float: left;
+}
+
 
 .header-entries {
   margin-top: 30px;

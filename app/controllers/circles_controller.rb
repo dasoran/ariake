@@ -7,12 +7,12 @@ class CirclesController < ApplicationController
   def create
     if params[:circlename] == ""
       flash[:info] = "サークル名が空欄です。"
-      return  redirect_to new_circles_path(:from => params[:from], :event_id => params[:event_id])
+      return  redirect_to new_circle_path(:from => params[:from], :event_id => params[:event_id])
     end
  
     if params[:author] == ""
       flash[:info] = "作家が空欄です。"
-      return  redirect_to new_circles_path(:from => params[:from], :event_id => params[:event_id])
+      return  redirect_to new_circle_path(:from => params[:from], :event_id => params[:event_id])
     end
  
     circle = Circle.new

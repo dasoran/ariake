@@ -56,7 +56,7 @@
       <% end %>
       entryUrlList[<%= entry.id %>] = '<%= page_url == "" ? "#" :page_url %>';
     </script>
-　　<% is_first = true %>
+    <% is_first = true %>
     <% if entry.handouts.count == 0 %>
     <tr class="entry-row entry-<%= entry.id %> <%= "entry-pending" if entry.is_pending %>">
       <td class="attend-at"><%= entry.attend_at %></td>

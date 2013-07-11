@@ -2,6 +2,10 @@
 <div class="entries-content">
 
 <div class="header-entries clearfix pure-menu pure-menu-open pure-menu-horizontal entries-index-menu">
+  <% print_params = {:page => @page} %>
+  <% print_params[:day] = @day unless @day.nil? %>
+  <%= link_to "印刷する", printlayout_entries_path(print_params),
+    :class => "pure-button pure-button-secondary entry-printlayout-button" %>
   <%= form_tag search_admin_entries_path, :class => "pure-form entries-searchbox", :method => "get" do%>
     <input name="search_text" class="search_inputbox" type="text" placeholder="">
     <button type="submit" class="pure-button pure-button-success" id="search-button-in-newentry">検索</button>

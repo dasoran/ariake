@@ -2,13 +2,49 @@
 class EntriesController < ApplicationController
   before_filter :login_required
 
+  def printlayout
+    @event = Event.find_by_name("C84") 
+
+    @days = ((@event.end_at - @event.begin_at + 1)/60/60/24)
+    @day = params[:day]
+    @sort = params[:sort]
+    @sort_vec = params[:vec]
+    @page = params[:page].nil? ? "1" : params[:page]
+
+    sortList = {
+      "placeup" => "entries.attend_at, comiket_blocks.comiket_area_id, comiket_blocks.name, map_layouts.space_number, sub_place",
+      "placedown" => "entries.attend_at desc, comiket_blocks.comiket_area_id desc, comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc",
+      "circlenameup" => "circles.name",
+      "circlenamedown" => "circles.name desc",
+      "updatedatup" => "entries.updated_at",
+      "updatedatdown" => "entries.updated_at desc",
+      }
+
+    if @sort.nil?
+      @entries = Entry.includes(:map_layout => :comiket_block).
+        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
+        order("%s" % sortList["placeup"])
+    else
+      @entries = Entry.includes(:map_layout => :comiket_block).includes(:circle).
+        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
+        order("%s" % sortList[@sort+@sort_vec])
+    end
+    @all_count = @entries.count
+    @all_page = (@all_count * 1.0 / Ariake::Application.config.per_page).ceil
+    @entries = @entries.
+        paginate(page: @page, per_page: Ariake::Application.config.per_page)
+
+
+    render layout: "printlayout"
+  end
+
   def index
     @event = Event.find_by_name("C84") 
 
     @day = params[:day]
     @sort = params[:sort]
     @sort_vec = params[:vec]
-    @page = params[:page].nil? ? 1 : params[:page]
+    @page = params[:page].nil? ? "1" : params[:page]
 
     sortList = {
       "placeup" => "entries.attend_at, comiket_blocks.comiket_area_id, comiket_blocks.name, map_layouts.space_number, sub_place",

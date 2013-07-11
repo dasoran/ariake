@@ -7,7 +7,7 @@ class Admin::EntriesController < Admin::Base
     @day = params[:day]
     @sort = params[:sort]
     @sort_vec = params[:vec]
-    @page = params[:page].nil? ? 1 : params[:page]
+    @page = params[:page].nil? ? "1" : params[:page]
 
     sortList = {
       "placeup" => "entries.attend_at, comiket_blocks.comiket_area_id, comiket_blocks.name, map_layouts.space_number, sub_place",
@@ -29,7 +29,6 @@ class Admin::EntriesController < Admin::Base
         order("%s" % sortList[@sort+@sort_vec]).
         paginate(page: @page, per_page: Ariake::Application.config.per_page)
     end
-
   end 
 
   def search
