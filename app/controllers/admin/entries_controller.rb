@@ -91,7 +91,8 @@ class Admin::EntriesController < Admin::Base
 
   def new_searched
     @event = Event.find_by_id(params[:event_id])
-    @circles = Circle.where("circles.name like \"%%%s%%\" or circles.author like \"%%%s%%\"" % [params[:search_text], params[:search_text]])
+    @circles = Circle.where("circles.name like \"%%%s%%\" or circles.author like \"%%%s%%\"" % [params[:search_text], params[:search_text]]).
+    order("circles.id desc")
   end
 
   def new_detail
