@@ -72,7 +72,7 @@
       <td class="entry-circle-author"><%= entry.circle.author %></td>
       <td class="executor"></td>
       <td class="quantity"></td>
-      <td></td>
+      <td class="goodsname"></td>
       <td class="price"></td>
       <td class="updated-at"><%= entry.goods_updated_at.strftime("%y-%m-%d %H:%M:%S")%></td>
     </tr>
@@ -103,7 +103,7 @@
         <% end %>
         <%= order_quantity %>
       </td>
-      <td class="<%= is_first ? "" : "extend" %>">
+      <td class="goodsname <%= is_first ? "" : "extend" %>">
         <%= handout.goods.name %>
       </td>
       <td class="price <%= is_first ? "" : "extend" %>">
