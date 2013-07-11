@@ -16,9 +16,7 @@
 count : <%= @all_count %>
 ,
 <%= link_to "day : %s" % [@day.nil? ? "all" : "%d 日目" % @day],
-  "%s?%spage=%d" % [request.path_info, @day.nil? ? "day=1&" : @day.to_i == @days ? "" : "day=%d&" % [@day.to_i + 1], @page] %>
-, 
-<%= link_to "page : %d" % @page, :page => (@page.to_i == @all_page ? 1 : @page.to_i + 1) %>
+  "%s?%s" % [request.path_info, @day.nil? ? "day=1" : @day.to_i == @days ? "" : "day=%d" % [@day.to_i + 1]] %>
 
 
 <% if @entries.present? %>

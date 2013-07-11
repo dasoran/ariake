@@ -9,7 +9,6 @@ class EntriesController < ApplicationController
     @day = params[:day]
     @sort = params[:sort]
     @sort_vec = params[:vec]
-    @page = params[:page].nil? ? "1" : params[:page]
 
     sortList = {
       "placeup" => "entries.attend_at, comiket_blocks.comiket_area_id, comiket_blocks.name, map_layouts.space_number, sub_place",
@@ -30,9 +29,6 @@ class EntriesController < ApplicationController
         order("%s" % sortList[@sort+@sort_vec])
     end
     @all_count = @entries.count
-    @all_page = (@all_count * 1.0 / Ariake::Application.config.per_page).ceil
-    @entries = @entries.
-        paginate(page: @page, per_page: Ariake::Application.config.per_page)
 
 
     render layout: "printlayout"
