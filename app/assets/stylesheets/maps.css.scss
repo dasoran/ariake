@@ -5,9 +5,15 @@
 .map_block {
   position: relative;
   
-  .map_image_block {
+  .e_image_block {
     img {
       min-width: 1270px;
+    }
+  }
+
+  .w_image_block {
+    img {
+      min-width: 1000px;
     }
   }
 
