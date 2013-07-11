@@ -25,7 +25,7 @@ class Admin::EntriesController < Admin::Base
         paginate(page: @page, per_page: Ariake::Application.config.per_page)
     else
       @entries = Entry.includes(:map_layout => :comiket_block).includes(:circle).
-        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
+        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
         order("%s" % sortList[@sort+@sort_vec]).
         paginate(page: @page, per_page: Ariake::Application.config.per_page)
     end
@@ -63,7 +63,7 @@ class Admin::EntriesController < Admin::Base
         paginate(page: @page, per_page: Ariake::Application.config.per_page)
     else
       @entries = Entry.includes(:map_layout => :comiket_block).includes(:circle).
-        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
+        where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
         includes(:circle).where(@search_sql.join(" and ")).
         order("%s" % sortList[@sort+@sort_vec]).
         paginate(page: @page, per_page: Ariake::Application.config.per_page)
