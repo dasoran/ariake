@@ -36,8 +36,12 @@
 -->
 <!-- user.show の代わり -->
       <li class="">
+      <a href="#"><%= "%s(%s)" % [@current_user.name, @current_user.login_id] %></a>
+      </li>
+      <li class="">
     <%= link_to "Logout", :session, method: :delete %>
       </li>
+
       <li class="
       <%= request.path_info == "/users/%s/entries" % @current_user.login_id ? "pure-menu-selected" : ""%>
       ">
