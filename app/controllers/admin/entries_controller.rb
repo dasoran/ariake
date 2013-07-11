@@ -10,8 +10,8 @@ class Admin::EntriesController < Admin::Base
     @page = params[:page].nil? ? 1 : params[:page]
 
     sortList = {
-      "placeup" => "entries.attend_at, comiket_blocks.name, map_layouts.space_number, sub_place",
-      "placedown" => "entries.attend_at desc, comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc",
+      "placeup" => "entries.attend_at, comiket_blocks.comiket_area_id, comiket_blocks.name, map_layouts.space_number, sub_place",
+      "placedown" => "entries.attend_at desc, comiket_blocks.comiket_area_id desc, comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc",
       "circlenameup" => "circles.name",
       "circlenamedown" => "circles.name desc",
       "updatedatup" => "entries.updated_at",
