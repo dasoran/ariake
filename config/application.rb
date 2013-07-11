@@ -62,5 +62,10 @@ module Ariake
     config.assets.version = '1.0'
 
 
+
+    # user defined variables
+    config.per_page = 40
+    # /user defined variables
   end
+
 end

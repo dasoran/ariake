@@ -2,7 +2,6 @@
 
 class Admin::EntriesController < Admin::Base
   def index
-    per_page = 40
     @event = Event.find_by_name("C84") 
 
     @day = params[:day]
@@ -23,12 +22,12 @@ class Admin::EntriesController < Admin::Base
       @entries = Entry.includes(:map_layout => :comiket_block).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
         order("%s" % sortList["placeup"]).
-        paginate(page: @page, per_page: per_page)
+        paginate(page: @page, per_page: Ariake::Application.config.per_page)
     else
       @entries = Entry.includes(:map_layout => :comiket_block).includes(:circle).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
         order("%s" % sortList[@sort+@sort_vec]).
-        paginate(page: @page, per_page: per_page)
+        paginate(page: @page, per_page: Ariake::Application.config.per_page)
     end
 
   end 
@@ -61,12 +60,14 @@ class Admin::EntriesController < Admin::Base
       @entries = Entry.includes(:map_layout => :comiket_block).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
         includes(:circle).where(@search_sql.join(" and ")).
-        order("%s" % sortList["placeup"])
+        order("%s" % sortList["placeup"]).
+        paginate(page: @page, per_page: Ariake::Application.config.per_page)
     else
       @entries = Entry.includes(:map_layout => :comiket_block).includes(:circle).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
         includes(:circle).where(@search_sql.join(" and ")).
-        order("%s" % sortList[@sort+@sort_vec])
+        order("%s" % sortList[@sort+@sort_vec]).
+        paginate(page: @page, per_page: Ariake::Application.config.per_page)
     end
   end
  

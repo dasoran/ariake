@@ -21,7 +21,6 @@ class UsersController < ApplicationController
     end
   end
   def entries
-    per_page = 40
     @event = Event.find_by_name("C84") 
     @user = User.find_by_login_id(params[:id])
     @page = params[:page].nil? ? 1 : params[:page]
@@ -29,10 +28,10 @@ class UsersController < ApplicationController
     @day = params[:day]
     if @day == "1" || @day == "2" || @day == "3"
       @entries = Entry.includes(:handouts => :orders).includes(:map_layout).where("map_layouts.event_id = %d and attend_at = %d and orders.user_id = '%s'" % [@event.id, @day, @user.id]).uniq.
-        paginate(page: @page, per_page: per_page)
+        paginate(page: @page, per_page: Ariake::Application.config.per_page)
     else
       @entries = Entry.includes(:handouts => :orders).includes(:map_layout).where("map_layouts.event_id = %d and orders.user_id = '%s'" % [@event.id, @user.id]).uniq.
-        paginate(page: @page, per_page: per_page)
+        paginate(page: @page, per_page: Ariake::Application.config.per_page)
     end
 
   end
