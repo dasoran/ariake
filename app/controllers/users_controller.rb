@@ -24,16 +24,38 @@ class UsersController < ApplicationController
   def entries
     @event = Event.find_by_name("C84") 
     @user = User.find_by_login_id(params[:id])
-    @page = params[:page].nil? ? 1 : params[:page]
 
     @day = params[:day]
-    if @day == "1" || @day == "2" || @day == "3"
-      @entries = Entry.includes(:handouts => :orders).includes(:map_layout).where("map_layouts.event_id = %d and attend_at = %d and orders.user_id = '%s'" % [@event.id, @day, @user.id]).uniq.
+    @sort = params[:sort]
+    @sort_vec = params[:vec]
+    @page = params[:page].nil? ? 1 : params[:page]
+
+
+    sortList = {
+      "placeup" => "entries.attend_at, comiket_blocks.comiket_area_id, comiket_blocks.name, map_layouts.space_number, sub_place",
+      "placedown" => "entries.attend_at desc, comiket_blocks.comiket_area_id desc, comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc",
+      "circlenameup" => "circles.name",
+      "circlenamedown" => "circles.name desc",
+      "updatedatup" => "entries.updated_at",
+      "updatedatdown" => "entries.updated_at desc",
+      }
+
+    if @sort.nil?
+      @entries = Entry.includes(:handouts => :orders).
+        includes(:map_layout => :comiket_block).
+        where("map_layouts.event_id = %d %s and orders.user_id = '%s'" %
+          [@event.id, @day.nil? ? "" : "and attend_at = "+@day, @user.id]).
+        order("%s" % sortList["placeup"]).
         paginate(page: @page, per_page: Ariake::Application.config.per_page)
     else
-      @entries = Entry.includes(:handouts => :orders).includes(:map_layout).where("map_layouts.event_id = %d and orders.user_id = '%s'" % [@event.id, @user.id]).uniq.
+      @entries = Entry.includes(:handouts => :orders).
+        includes(:map_layout => :comiket_block).includes(:circle).
+        where("map_layouts.event_id = %d %s and orders.user_id = '%s'" %
+          [@event.id, @day.nil? ? "" : "and attend_at = "+@day, @user.id]).
+        order("%s" % sortList[@sort+@sort_vec]).
         paginate(page: @page, per_page: Ariake::Application.config.per_page)
     end
+
 
   end
 end
