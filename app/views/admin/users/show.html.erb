@@ -10,6 +10,7 @@
       <th>ユーザー</th>
       <th>色</th>
       <th>権限</th>
+      <th>アカウント削除</th>
     </tr>
     </thead>
 
@@ -39,6 +40,9 @@
           <input id="permissionadmin-<%=user.id%>" type="radio" name="permission-<%=user.id%>" value="admin" <%= "checked" if user.administrator %>>
           管理者
         </label>
+      </td>
+      <td class="delete">
+        <%= link_to "削除", admin_user_path(:id => user.id), method: :delete, :class => "pure-button pure-button-error url-destroy-button", confirm: "ユーザーを削除しますか？" %>
       </td>
     </tr>
       <% end %>

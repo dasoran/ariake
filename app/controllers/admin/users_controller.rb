@@ -10,6 +10,16 @@ class Admin::UsersController < Admin::Base
       "#ffffff", "#ff00ff", "#ffff00", "#00ffff"
     ]
   end
+
+  def destroy
+    @user = User.find_by_id(params[:id])
+    @user.destroy
+    @user.save
+
+    flash[:success] = "ユーザーを削除しました。"
+    redirect_to admin_user_path
+  end
+
   def change_permission
     #user = User.find_by_id(params[:user_id])
     #user.assign_attributes({"administrator" => (params[:admin] == 'true' ? true : false)}, as: :admin)
