@@ -75,6 +75,8 @@ class EntriesController < ApplicationController
     @sort = params[:sort]
     @sort_vec = params[:vec]
 
+    @page = params[:page].nil? ? "1" : params[:page]
+
     sortList = {
       "placeup" => "comiket_blocks.name, map_layouts.space_number, sub_place",
       "placedown" => "comiket_blocks.name desc, map_layouts.space_number desc, sub_place desc",
@@ -96,15 +98,19 @@ class EntriesController < ApplicationController
       @entries = Entry.includes(:map_layout => :comiket_block).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
         includes(:circle).where(@search_sql.join(" and ")).
-        order("%s" % sortList["placeup"]).
-        paginate(page: @page, per_page: Ariake::Application.config.per_page)
+        order("%s" % sortList["placeup"])
     else
       @entries = Entry.includes(:map_layout => :comiket_block).includes(:circle).
         where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "attend_at = "+@day]).
         includes(:circle).where(@search_sql.join(" and ")).
-        order("%s" % sortList[@sort+@sort_vec]).
-        paginate(page: @page, per_page: Ariake::Application.config.per_page)
+        order("%s" % sortList[@sort+@sort_vec])
     end
+
+
+    @all_count = @entries.count
+    @entries = @entries.
+      paginate(page: @page, per_page: Ariake::Application.config.per_page)
+
   end
 
 
