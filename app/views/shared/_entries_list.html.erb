@@ -1,6 +1,7 @@
 
 <% if @entries.present? %>
 
+count : <%= @all_count %>
 <%= will_paginate @entries %>
 
 <table class="pure-table entries-table">
