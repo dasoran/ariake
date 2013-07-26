@@ -5,11 +5,9 @@
 <div class="entries-content">
 <% if @entry.present? %>
 
-<% unless @entry.is_pending %>
 <%= link_to "編集する", edit_entry_path, :class => "pure-button pure-button-secondary entry-edit-button" %>
 <%= link_to "削除する", entry_path, method: :delete, :class => "pure-button pure-button-error entry-edit-button", confirm: "イベント登録情報を削除しますか？" %>
 
-<% end %>
 <%= form_tag update_all_orders_path, :class => "pure-form" do%>
   <input type="hidden" name="entry_id" value="<%= @entry.id %>">
 
