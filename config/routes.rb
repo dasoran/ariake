@@ -25,7 +25,7 @@ Ariake::Application.routes.draw do
     end
     resources :executors, only: [:index, :create, :new, :destroy]
     resources :entries do
-      collection { get "search", "new_searched", "new_detail", "printlayout"}
+      collection { get "search", "new_searched", "new_detail", "printlayout", "change_pending"}
       member { post "update_all" }
     end
   end

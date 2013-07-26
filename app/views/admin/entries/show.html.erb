@@ -6,6 +6,11 @@
 <% if @entry.present? %>
   <%= link_to "編集する", edit_admin_entry_path, :class => "pure-button pure-button-secondary entry-edit-button" %>
   <%= link_to "削除する", admin_entry_path, method: :delete, :class => "pure-button pure-button-error entry-edit-button", confirm: "イベント登録情報を削除しますか？" %>
+  <% if @entry.is_pending %>
+    <%= link_to "保留を解除する", change_pending_admin_entries_path(:id => @entry.id, :pending => false), :class => "pure-button pure-button-secondary entry-edit-button", confirm: "イベント登録情報を保留を解除しますか？" %>
+  <% else %>
+    <%= link_to "保留する", change_pending_admin_entries_path(:id => @entry.id, :pending => true), :class => "pure-button pure-button-secondary entry-edit-button", confirm: "イベント登録情報を保留しますか？" %>
+  <% end %>
 
 <%= form_tag update_all_orders_path, :class => "pure-form" do%>
   <input type="hidden" name="entry_id" value="<%= @entry.id %>">

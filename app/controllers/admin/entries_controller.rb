@@ -284,4 +284,14 @@ class Admin::EntriesController < Admin::Base
     redirect_to admin_entry_path(params[:id])
   end
 
+  def change_pending
+    entry = Entry.find_by_id(params[:id])
+    is_pending = params[:pending]
+
+    entry.is_pending = is_pending
+    entry.save
+
+    redirect_to admin_entry_path(params[:id])
+  end
+
 end
