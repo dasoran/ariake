@@ -163,7 +163,7 @@ count : <%= @all_count %>
               }
             );
             $(entry).click(function () {
-              window.location = "/entries/"+key;
+              window.location = "/entries/"+key+"<%= "?page=%d" % [@page] %>"+"&<%= "%s" % [@day.nil? ? "" : "day=%d" % [@day]] %>"
             });
           })(entryKey)
         }

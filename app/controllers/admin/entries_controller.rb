@@ -73,6 +73,9 @@ class Admin::EntriesController < Admin::Base
   end
  
   def show
+    @day = params[:day]
+    @page = params[:page].nil? ? "1" : params[:page]
+
     @entry = Entry.find_by_id(params[:id])
     @map_layout = @entry.map_layout
     @event = @map_layout.event
