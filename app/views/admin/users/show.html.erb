@@ -27,12 +27,16 @@
         </select>
       </td>
       <td class="permission">
-        <label for="permissionnormal" class="pure-radio">
-          <input id="permissionnormal" type="radio" name="permission-<%=user.id%>" value="normal" <%= "checked" unless user.administrator %>>
+        <label for="permissionpending-<%=user.id%>" class="pure-radio">
+          <input id="permissionpending-<%=user.id%>" type="radio" name="permission-<%=user.id%>" value="pending" <%= "checked" if user.is_pending %>>
+          停止中
+        </label>
+        <label for="permissionnormal-<%=user.id%>" class="pure-radio">
+          <input id="permissionnormal-<%=user.id%>" type="radio" name="permission-<%=user.id%>" value="normal" <%= "checked" if (user.administrator == false and user.is_pending == false) %>>
           一般ユーザー
         </label>
-        <label for="permissionadmin" class="pure-radio">
-          <input id="permissionadmin" type="radio" name="permission-<%=user.id%>" value="admin" <%= "checked" if user.administrator %>>
+        <label for="permissionadmin-<%=user.id%>" class="pure-radio">
+          <input id="permissionadmin-<%=user.id%>" type="radio" name="permission-<%=user.id%>" value="admin" <%= "checked" if user.administrator %>>
           管理者
         </label>
       </td>

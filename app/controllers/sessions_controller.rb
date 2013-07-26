@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       #redirect_to user_path(user.login_id)
       redirect_to :root
     else
-      flash[:error] = "ログイン情報が間違っています"
+      flash[:error] = "ログイン情報が間違っているか、アカウントが承認されていません。"
       redirect_to login_users_path
     end
   end

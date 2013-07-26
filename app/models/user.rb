@@ -1,7 +1,7 @@
 # coding: utf-8
 class User < ActiveRecord::Base
   attr_accessible :login_id, :name, :password
-  attr_accessible :login_id, :name, :password, :administrator, :color,  as: :admin
+  attr_accessible :login_id, :name, :password, :administrator, :color, :is_pending,  as: :admin
   attr_accessor :password
   has_many :orders
   has_many :executors
@@ -26,7 +26,13 @@ class User < ActiveRecord::Base
       user = self.find_by_login_id(login_id)
       if user && user.pass_hash? &&
           BCrypt::Password.new(user.pass_hash) == password
-        user
+        
+        unless user.is_pending
+          user
+        else
+          nil
+        end
+        
       else
         nil
       end

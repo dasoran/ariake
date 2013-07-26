@@ -33,6 +33,12 @@ class Admin::UsersController < Admin::Base
           user.save
           is_changed = true
         end
+        is_pending = (value == "pending" ? true : false)
+        unless user.is_pending == is_pending
+          user.assign_attributes({"is_pending" => is_pending}, as: :admin)
+          user.save
+          is_changed = true
+        end
       end
     end
 
