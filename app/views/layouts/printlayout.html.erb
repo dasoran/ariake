@@ -96,6 +96,7 @@ count : <%= @all_count %>
         <% handout.orders.each do |order| %>
         <% order_name_list << "," unless order_name_list == "" %>
         <% order_name_list << order.user.name %>
+        <% order_name_list << "x%d" % [order.quantity] %>
         <% end %>
         <%= order_name_list %>
       </td>
