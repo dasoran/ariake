@@ -19,8 +19,9 @@ class EntriesController < ApplicationController
       csv << ["Color","1","4a94ff","4a94ff"]
       csv << ["Color","2","ff00ff","ff00ff"]
       @entries.each do |e|
+        attend = ['土', '日', '月'][e.attend_at - 1]
         rom_data = CircleRomDatas.joins(:map_layout => :comiket_block).
-          where("map_layouts.space_number = %d and comiket_blocks.name = '%s'" % [e.map_layout.space_number, e.map_layout.comiket_block.name]).first
+          where("map_layouts.space_number = %d and comiket_blocks.name = '%s' and attend = '%s'" % [e.map_layout.space_number, e.map_layout.comiket_block.name, attend]).first
         list_data = ["Circle"]
         list_data << rom_data.rom_id
         list_data << 1
