@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
   def authorize
     if session[:user_id]
       @current_user = User.find_by_id(session[:user_id])
+      if @current_user.permission == "stop"
+        session.delete(:user_id)
+        redirect_to :root
+      end
       session.delete(:user_id) unless @current_user
     end
   end
