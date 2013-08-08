@@ -4,11 +4,11 @@
 <div class="entries-content">
 
   <% if @event.is_inhibit %>
-  <%= link_to "書き込みを許可する", stop_to_inhibit_admin_events_path(:id => @event.id), :class => "pure-button pure-button-error entry-edit-button" %>
+  <%= link_to "書き込みを許可する", stop_to_inhibit_admin_events_path(:id => @event.id), :class => "pure-button pure-button-secondary entry-edit-button" %>
   <%= link_to "書き込みを禁止する", "#", :class => "pure-button pure-button-disable entry-edit-button" %>
   <% else %>
   <%= link_to "書き込みを許可する", "#", :class => "pure-button pure-button-disable entry-edit-button" %>
-  <%= link_to "書き込みを禁止する", inhibit_input_admin_events_path(:id => @event.id), :class => "pure-button pure-button-secondary entry-edit-button" %>
+  <%= link_to "書き込みを禁止する", inhibit_input_admin_events_path(:id => @event.id), :class => "pure-button pure-button-error entry-edit-button" %>
   <% end %>
 
   <%= form_tag change_permission_admin_user_path, :class => "pure-form" do%>
