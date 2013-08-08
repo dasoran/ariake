@@ -3,4 +3,5 @@ class MapLayout < ActiveRecord::Base
   belongs_to :event
   belongs_to :comiket_block
   has_one :entry
+  has_one :circle_rom_datas
 end
