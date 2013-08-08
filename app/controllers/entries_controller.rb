@@ -44,7 +44,7 @@ class EntriesController < ApplicationController
         list_data << rom_data.map_layout.layout
         list_data << e.sub_place
         list_data << rom_data.appended_comment
-        list_data << rom_data.circlems_url
+        list_data << rom_data.circlems_url.chomp
         list_data << rom_data.rss_url
         list_data << ""
         csv << list_data
