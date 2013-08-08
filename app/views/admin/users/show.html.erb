@@ -32,6 +32,10 @@
           <input id="permissionstop-<%=user.id%>" type="radio" name="permission-<%=user.id%>" value="stop" <%= "checked" if user.permission == "stop" %>>
           停止中
         </label>
+        <label for="permissionrom-<%=user.id%>" class="pure-radio">
+          <input id="permissionrom-<%=user.id%>" type="radio" name="permission-<%=user.id%>" value="rom" <%= "checked" if user.permission == "rom" %>>
+          ROM
+        </label>
         <label for="permissionnormal-<%=user.id%>" class="pure-radio">
           <input id="permissionnormal-<%=user.id%>" type="radio" name="permission-<%=user.id%>" value="normal" <%= "checked" if user.permission == "normal" %>>
           一般ユーザー

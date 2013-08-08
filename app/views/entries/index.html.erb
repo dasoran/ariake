@@ -27,7 +27,9 @@
       <%= link_to "全日程", entries_path %>
     </li>
   </ul>
+<% unless @current_user.permission == "rom" %>
 <%= link_to "サークルをイベントに追加する", new_entry_path(:event_id => @event.id), :class => "pure-button pure-button-primary entry-new-button" %>
+<% end %>
 </div>
 
 <%= render "shared/entries_list" %>
