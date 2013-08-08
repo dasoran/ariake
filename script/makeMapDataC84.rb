@@ -2,9 +2,11 @@
 # coding: utf-8
 require 'nkf'
 
-event = Event.find_by_name("C84")
+event_name = "C84"
 
-f = open("data/C84/C82DEF.TXT", "r:cp932")
+event = Event.find_by_name(event_name)
+
+f = open("data/%s/%sDEF.TXT" % [event_name, event_name], "r:cp932")
 def_texts = Hash::new
 
 label = ""
@@ -42,7 +44,7 @@ def_texts["ComiketArea"].each do |rawdata|
 end
 
 
-f = open("data/C84/C82MAP.TXT", "r:utf-16le")
+f = open("data/%s/%sMAP.TXT" % [event_name, event_name], "r:utf-16le")
 f.each do |line|
   block_name, space_number, x, y, layout = line.split("\n")[0].split("\t")
   block_name = NKF::nkf("-WwZ1", block_name)
