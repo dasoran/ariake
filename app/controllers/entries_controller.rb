@@ -2,6 +2,60 @@
 class EntriesController < ApplicationController
   before_filter :login_required
 
+  def downloadlist
+    @event = Event.find_by_name("C84") 
+
+    @days = ((@event.end_at - @event.begin_at + 1)/60/60/24)
+    @day = params[:day]
+
+    @entries = Entry.includes(:map_layout => :comiket_block).
+      where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day])
+ 
+    require "csv"
+    require "kconv"
+
+    data = CSV.generate("",{:encoding => "sjis", :row_sep => "\r\n"}) do |csv|
+      csv << ["Header", "ComicMarketCD-ROMCatalog","ComicMarket84","Shift_JIS","Windows 1.82.1"]
+      csv << ["Color","1","4a94ff","4a94ff"]
+      csv << ["Color","2","ff00ff","ff00ff"]
+      @entries.each do |e|
+        rom_data = CircleRomDatas.joins(:map_layout => :comiket_block).
+          where("map_layouts.space_number = %d and comiket_blocks.name = '%s'" % [e.map_layout.space_number, e.map_layout.comiket_block.name]).first
+        list_data = ["Circle"]
+        list_data << rom_data.rom_id
+        list_data << 1
+        list_data << rom_data.page
+        list_data << rom_data.cut_index
+        list_data << rom_data.attend
+        list_data << rom_data.map_layout.comiket_block.comiket_area.name[0]
+        list_data << NKF::nkf("-WwXm0", rom_data.map_layout.comiket_block.name)
+        list_data << rom_data.map_layout.space_number
+        list_data << rom_data.genre_code
+        list_data << rom_data.circle_name
+        list_data << rom_data.circle_name_kana
+        list_data << rom_data.author
+        list_data << rom_data.book_name
+        list_data << rom_data.url
+        list_data << rom_data.mail
+        list_data << rom_data.comment
+        list_data << ""
+        list_data << rom_data.map_layout.x
+        list_data << rom_data.map_layout.y
+        list_data << rom_data.map_layout.layout
+        list_data << e.sub_place
+        list_data << rom_data.appended_comment
+        list_data << rom_data.circlems_url
+        list_data << rom_data.rss_url
+        list_data << ""
+        csv << list_data
+      end
+    end
+    send_data(data.tosjis, type: "text/csv", filename: "checklists_#{Time.now.strftime('%Y_%m_%d_%H_%M_%S')}.csv")
+  end
+
+
+
+
   def printlayout
     @event = Event.find_by_name("C84") 
 
