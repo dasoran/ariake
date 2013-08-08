@@ -6,7 +6,7 @@ Ariake::Application.routes.draw do
   end
   resource :session, only: [:create, :destroy]
   resources :entries do
-    collection { get "search", "new_searched", "new_detail", "printlayout", "downloadlist"}
+    collection { get "search", "new_searched", "new_detail", "printlayout", "downloadlist", "difflist"}
     member { post "update_all" }
   end
   resources :maps

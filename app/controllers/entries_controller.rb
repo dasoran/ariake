@@ -2,6 +2,54 @@
 class EntriesController < ApplicationController
   before_filter :login_required
 
+
+  def difflist
+    @event = Event.find_by_name("C84") 
+
+    @days = ((@event.end_at - @event.begin_at + 1)/60/60/24)
+    @day = params[:day]
+
+    @entries = Entry.includes(:map_layout => :comiket_block).
+      where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
+      order("entries.attend_at, comiket_blocks.comiket_area_id, comiket_blocks.name, map_layouts.space_number, sub_place")
+ 
+    require "csv"
+    require "kconv"
+
+    data = CSV.generate("",{:encoding => "sjis", :row_sep => "\r\n"}) do |csv|
+      @entries.each do |e|
+        attend = ['土', '日', '月'][e.attend_at - 1]
+        rom_data = CircleRomDatas.joins(:map_layout => :comiket_block).
+          where("map_layouts.space_number = %d and comiket_blocks.name = '%s' and attend = '%s'" % [e.map_layout.space_number, e.map_layout.comiket_block.name, attend])
+        rom_data = e.sub_place == "a" ? rom_data[0] : rom_data[1]
+        unless rom_data.circle_name == e.circle.name
+          list_data = []
+          list_data << rom_data.attend
+          list_data << rom_data.map_layout.comiket_block.comiket_area.name[0]
+          list_data << NKF::nkf("-WwXm0", rom_data.map_layout.comiket_block.name)
+          list_data << rom_data.map_layout.space_number
+          list_data << e.sub_place
+          list_data << rom_data.circle_name
+          list_data << rom_data.author
+          csv << list_data
+          list_data = []
+          list_data << ""
+          list_data << ""
+          list_data << ""
+          list_data << ""
+          list_data << ""
+          list_data << e.circle.name
+          list_data << e.circle.author
+          csv << list_data
+        end
+      end
+    end
+    send_data(data.tosjis, type: "text/csv", filename: "difflists_#{Time.now.strftime('%Y_%m_%d_%H_%M_%S')}.csv")
+  end
+
+
+
+
   def downloadlist
     @event = Event.find_by_name("C84") 
 
@@ -9,7 +57,8 @@ class EntriesController < ApplicationController
     @day = params[:day]
 
     @entries = Entry.includes(:map_layout => :comiket_block).
-      where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day])
+      where("map_layouts.event_id = %d %s" % [@event.id, @day.nil? ? "" : "and attend_at = "+@day]).
+      order("entries.attend_at, comiket_blocks.comiket_area_id, comiket_blocks.name, map_layouts.space_number, sub_place")
  
     require "csv"
     require "kconv"
