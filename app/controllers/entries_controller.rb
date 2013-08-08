@@ -21,7 +21,8 @@ class EntriesController < ApplicationController
       @entries.each do |e|
         attend = ['土', '日', '月'][e.attend_at - 1]
         rom_data = CircleRomDatas.joins(:map_layout => :comiket_block).
-          where("map_layouts.space_number = %d and comiket_blocks.name = '%s' and attend = '%s'" % [e.map_layout.space_number, e.map_layout.comiket_block.name, attend]).first
+          where("map_layouts.space_number = %d and comiket_blocks.name = '%s' and attend = '%s'" % [e.map_layout.space_number, e.map_layout.comiket_block.name, attend])
+        rom_data = e.sub_place == "a" ? rom_data[0] : rom_data[1]
         list_data = ["Circle"]
         list_data << rom_data.rom_id
         list_data << 1
@@ -43,7 +44,7 @@ class EntriesController < ApplicationController
         list_data << rom_data.map_layout.x
         list_data << rom_data.map_layout.y
         list_data << rom_data.map_layout.layout
-        list_data << e.sub_place
+        list_data << e.sub_place == "a" ? 0 : 1
         list_data << rom_data.appended_comment
         list_data << rom_data.circlems_url.chomp
         list_data << rom_data.rss_url
