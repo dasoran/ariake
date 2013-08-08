@@ -263,7 +263,7 @@ class EntriesController < ApplicationController
       flash[:info] = "位置が空欄です。"
       return  redirect_to new_detail_entries_path(:circle_id => params[:circle], :event_id => params[:event])
     end
-    map_layout = MapLayout.joins(:comiket_block).where("map_layouts.space_number = %d and comiket_blocks.name = '%s'" % [params[:space_number], params[:block_name]]).first
+    map_layout = MapLayout.joins(:comiket_block).where("map_layouts.space_number = %d and comiket_blocks.name = '%s' and map_layouts.event_id = '%d'" % [params[:space_number], params[:block_name], params[:event]]).first
 
     if map_layout.nil?
       flash[:info] = "参加位置が間違えています。"
