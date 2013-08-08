@@ -23,7 +23,9 @@
     </li>
   </ul>
 <% unless @current_user.permission == "rom" %>
+<% unless @event.is_inhibit %>
 <%= link_to "サークルをイベントに追加する", new_entry_path(:event_id => @event.id), :class => "pure-button pure-button-primary entry-new-button" %>
+<% end %>
 <% end %>
 </div>
 

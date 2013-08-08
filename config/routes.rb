@@ -28,6 +28,9 @@ Ariake::Application.routes.draw do
       collection { get "search", "new_searched", "new_detail", "printlayout", "change_pending"}
       member { post "update_all" }
     end
+    resources :events do
+      collection {get "inhibit_input", "stop_to_inhibit"}
+    end
   end
 
 end

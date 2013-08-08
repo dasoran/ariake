@@ -115,6 +115,7 @@ class EntriesController < ApplicationController
 
 
   def show
+    @event = Event.find_by_name("C84") 
     @day = params[:day]
     @page = params[:page].nil? ? "1" : params[:page]
 

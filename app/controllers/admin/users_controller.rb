@@ -2,6 +2,8 @@
 
 class Admin::UsersController < Admin::Base
   def show
+    @event = Event.find_by_name("C84") 
+
     @users = User.all
     @color_list = [
       "#000000", "#800000", "#008000", "#000080",
