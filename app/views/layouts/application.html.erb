@@ -49,7 +49,7 @@
       </li>
 <!-- user.show の代わり -->
 
-      <% if @current_user.try(:administrator) %>
+      <% if @current_user.permission == "admin" %>
 <!-- admin -->
       <li class="
       <%= request.path_info == "/admin/user" ? "pure-menu-selected" : ""%>

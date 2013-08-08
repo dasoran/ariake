@@ -22,7 +22,7 @@ class CirclesController < ApplicationController
 
     flash[:success] = "%s を追加しました。" % circle.name
     if params[:from] == "entries_new_searched"
-      if @current_user.administrator
+      if @current_user.permission == "admin"
         redirect_to new_searched_admin_entries_path(:event_id => params[:event_id])
       else
         redirect_to new_searched_entries_path(:event_id => params[:event_id])

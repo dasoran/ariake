@@ -30,7 +30,7 @@ class OrdersController < ApplicationController
     else 
       flash[:info] = "変更する個数を変更してから更新ボタンを押してください。"
     end
-    if @current_user.administrator
+    if @current_user.permission == "admin"
       redirect_to admin_entry_path(redirect_params)
     else
       redirect_to entry_path(redirect_params)
@@ -52,7 +52,7 @@ class OrdersController < ApplicationController
     order.quantity = 1
     order.save
     flash[:success] = "希望を追加しました。"
-    if @current_user.administrator
+    if @current_user.permission == "admin"
       redirect_to admin_entry_path(redirect_params)
     else
       redirect_to entry_path(redirect_params)

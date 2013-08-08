@@ -30,7 +30,7 @@ class HandoutsController < ApplicationController
       handout.save
     end
     flash[:success] = "頒布物を追加しました。"
-    if @current_user.administrator
+    if @current_user.permission == "admin"
       redirect_to admin_entry_path(params[:entry_id])
     else
       redirect_to entry_path(params[:entry_id])
@@ -40,7 +40,7 @@ class HandoutsController < ApplicationController
     handout = Handout.find_by_id(params[:id])
     handout.destroy
     flash[:success] = "頒布物を削除しました。"
-    if @current_user.administrator
+    if @current_user.permission == "admin"
       redirect_to admin_entry_path(params[:entry_id])
     else
       redirect_to entry_path(params[:entry_id])

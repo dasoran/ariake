@@ -12,7 +12,7 @@ class CircleUrlsController < ApplicationController
     circle_url.is_master_url = present_master_url.nil?
     circle_url.save
     flash[:success] = "URLを追加しました。"
-    if @current_user.administrator
+    if @current_user.permission == "admin"
       redirect_to edit_admin_entry_path(params[:entry_id])
     else
       redirect_to edit_entry_path(params[:entry_id])
@@ -23,7 +23,7 @@ class CircleUrlsController < ApplicationController
     circle_url.destroy
     circle_url.save
     flash[:success] = "URLを削除しました。"
-    if @current_user.administrator
+    if @current_user.permission == "admin"
       redirect_to edit_admin_entry_path(params[:entry_id])
     else
       redirect_to edit_entry_path(params[:entry_id])

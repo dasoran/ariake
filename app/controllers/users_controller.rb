@@ -5,9 +5,8 @@ class UsersController < ApplicationController
   end
   def create
     @user = User.new(params[:user])
-    @user.administrator = false
     @user.color = "#000000"
-    @user.is_pending = true
+    @user.permission = "stop"
     if @user.save
       flash[:success] = "登録が完了しました。"
       redirect_to :root

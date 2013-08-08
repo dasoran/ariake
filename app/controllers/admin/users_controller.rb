@@ -37,15 +37,8 @@ class Admin::UsersController < Admin::Base
           is_changed = true
         end
       elsif param_name == "permission"
-        admin = (value == "admin" ? true : false)
-        unless user.administrator == admin
-          user.assign_attributes({"administrator" => admin}, as: :admin)
-          user.save
-          is_changed = true
-        end
-        is_pending = (value == "pending" ? true : false)
-        unless user.is_pending == is_pending
-          user.assign_attributes({"is_pending" => is_pending}, as: :admin)
+        unless user.permission == value
+          user.assign_attributes({"permission" => value}, as: :admin)
           user.save
           is_changed = true
         end
