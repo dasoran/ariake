@@ -42,11 +42,13 @@
     <%= link_to "Logout", :session, method: :delete %>
       </li>
 
+      <% unless @current_user.permission == "rom" %>
       <li class="
       <%= request.path_info == "/users/%s/entries" % @current_user.login_id ? "pure-menu-selected" : ""%>
       ">
     <%= link_to "希望一覧", entries_user_path(@current_user.login_id) %>
       </li>
+      <% end %>
 <!-- user.show の代わり -->
 
       <% if @current_user.permission == "admin" %>
